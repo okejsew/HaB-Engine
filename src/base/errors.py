@@ -36,3 +36,7 @@ class ObjectNotFound(SceneError):
 class TextureFileSyntaxIncorrect(ComponentError):
     def __init__(self, line):
         super().__init__(f'\nОшибка парсинга файла текстуры на этом месте: {line}')
+
+class MissingCameraOnScene(EngineError):
+    def __init__(self, scene):
+        super().__init__(f'Отсутствует камера для рендеринга на сцене: {scene}')

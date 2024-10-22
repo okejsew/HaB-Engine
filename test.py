@@ -1,7 +1,4 @@
-input('Press enter to start')
-from random import randint
-from time import sleep
-from src.assets.objects.rectangle import Rectangle
+from src.assets.objects.pospoint import PositionPoint
 from src.components.rigidbody import Rigidbody
 from src.utils.vector import Vector2
 from src.base.scene import Scene
@@ -9,15 +6,20 @@ from src.engine import Engine
 
 
 scene = Scene()
-Engine.debug_mode = True
 Engine.set_scene(scene)
+Engine.debug_mode = True
+r = PositionPoint()
+r.transform.position = Vector2(10, 10)
+r.add_component(Rigidbody())
+scene.add(r)
 Engine.run()
 
 
-while True:
-    rect = Rectangle(1, 1, '*')
-    rect.transform.position = Vector2(randint(1, 173), randint(-50, -1))
-    rect.add_component(Rigidbody())
-    rect.get_component(Rigidbody).mass = 0.1
-    scene.add(rect)
-    sleep(0.05)
+# while True:
+#     rect = Rectangle(1, 1, '*')
+#     rect.transform.position = Vector2(randint(1, 119), randint(-5, -1))
+#     rect.add_component(Rigidbody())
+#     rect.get_component(Rigidbody).mass = randint(1, 100) / 10
+#     rect.get_component(Rigidbody).max_fall_speed = 100
+#     scene.add(rect)
+#     sleep(3)

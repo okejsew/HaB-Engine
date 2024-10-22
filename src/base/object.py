@@ -21,11 +21,10 @@ class BaseObject:
             self.__components.append(component)
             component.set_owner(self)
 
-    def get_component(self, t: Type[T]) -> Optional[T]:
+    def get_component(self, t: Type[T]) -> Optional[T] | None:
         for component in self.__components:
             if isinstance(component, t):
                 return component
-        raise ComponentNotFound(t, self)
 
     def remove_component(self, component: 'BaseComponent'):
         for c in self.__components:

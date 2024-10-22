@@ -1,4 +1,5 @@
 import curses
+import time
 from threading import Thread
 from time import sleep
 from typing import Callable
@@ -12,6 +13,7 @@ class Engine:
     __current_scene: Scene | None = None
     is_working: bool = False
     debug_mode: bool = False
+    frame_time: float = time.time()
 
     @staticmethod
     def set_scene(scene: Scene):
@@ -29,17 +31,20 @@ class Engine:
     def __debug_info():
         RenderCore.print(1, 1, f'Текущая сцена: {Engine.__current_scene}')
         RenderCore.print(2, 1, f'Кол-во объектов на сцене: {len(Engine.__current_scene.objects)}')
-        RenderCore.print(3, 1, f'Время на отрисовку кадра: {round(RenderCore.update_time, 2)} сек.')
-        RenderCore.print(4, 1, f'Время обновления физики: {round(PhisycsCore.update_time, 2)} сек.')
-        framerate = round(1 / RenderCore.update_time, 2) if RenderCore.update_time > 0 else "Слишком много"
-        RenderCore.print(5, 1, f'Частота кадров: {framerate}')
+
+
 
     @staticmethod
     @__check_scene
     def run():
         Engine.is_working = True
-        Thread(target=Engine.__drawing_thread).start()
         Thread(target=Engine.__physics_thread).start()
+        while Engine.is_working:
+            RenderCore.clear()
+            RenderCore.draw_objects(Engine.__current_scene)
+            if Engine.debug_mode:
+                Engine.__debug_info()
+            RenderCore.refresh()
 
     @staticmethod
     def end():
