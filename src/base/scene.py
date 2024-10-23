@@ -17,6 +17,7 @@ class Scene:
     def add(self, obj: BaseObject):
         if obj not in self.objects:
             self.objects.append(obj)
+            obj.scene = self
         else:
             raise ObjectAlreadyAdded(obj, self)
 

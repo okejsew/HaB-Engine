@@ -5,13 +5,8 @@ if TYPE_CHECKING:
 
 class BaseComponent:
     def __init__(self):
-        """
-        Базовый класс для создания компонента\n
-        """
-        self.owner: 'BaseObject | None' = None
-
-    def set_owner(self, owner: 'BaseObject'):
-        self.owner = owner
+        """Базовый класс для создания компонента"""
+        self.owner: 'BaseObject' or None = None
 
     def __str__(self):
         return f'Component[t={self.__class__.__name__}]'

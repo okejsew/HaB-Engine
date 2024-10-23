@@ -5,6 +5,7 @@ from src.utils.vector import Vector2
 
 if TYPE_CHECKING:
     from src.base.component import BaseComponent
+    from src.base.scene import Scene
 
 T = TypeVar('T')
 
@@ -20,11 +21,12 @@ class BaseObject:
         self.visible: bool = True
         self.__components: list['BaseComponent'] = []
         self.position: Vector2 = Vector2()
+        self.scene: 'Scene' or None = None
 
     def add_component(self, component: 'BaseComponent'):
         if component not in self.__components:
             self.__components.append(component)
-            component.set_owner(self)
+            component.owner = self
 
     def get_component(self, t: Type[T]) -> Optional[T] | None:
         for component in self.__components:
