@@ -22,9 +22,7 @@ class Rigidbody(BaseComponent):
     @BaseComponent.check_owner
     def update(self, delta_time: float = 0.05):
         if self.is_gravity:
-            # Применяем гравитацию
-            self.add_force(Vector2F(0, self.gravity * self.mass))
-
+            self.add_force(Vector2F(0, self.gravity * self.mass))  # Применяем гравитацию
 
         self.acceleration = self.force / self.mass       # Ускорение: a = f / m
         self.velocity += self.acceleration * delta_time  # Скорость: v = v + a * delta_time
@@ -33,12 +31,11 @@ class Rigidbody(BaseComponent):
         if self.velocity.length() > self.max_fall_speed:
             self.velocity = self.velocity.normalized() * self.max_fall_speed
 
-        # sub-pixel movement
+        # Если остаток скорости > 0 но < 1, сохраняем его на след. шаг и добавляем там
         total_velocity: Vector2F = self.velocity * delta_time
         total_velocity += self.velocity_remainder
         int_velocity: Vector2 = total_velocity.to_int()
         self.velocity_remainder = total_velocity - int_velocity
 
-        self.owner.transform.position += int_velocity
-
+        self.owner.position += int_velocity
         self.force = Vector2F()

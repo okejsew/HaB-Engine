@@ -1,9 +1,5 @@
-import curses
-import time
-
 from src.components.texture import Texture, Point
-from src.base.errors import ComponentNotFound, MissingCameraOnScene
-from src.base.object import BaseObject
+from src.base.errors import MissingCameraOnScene
 from src.base.scene import Scene
 from src.utils.console import window
 from src.utils.vector import Vector2
@@ -34,13 +30,13 @@ class RenderCore:
             raise MissingCameraOnScene(scene)
 
         # Определение региона камеры (границ)
-        region_start: Vector2 = Vector2(scene.camera.transform.position.x - round(scene.camera.size.x / 2),
-                                        scene.camera.transform.position.y - round(scene.camera.size.y / 2))
+        region_start: Vector2 = Vector2(scene.camera.position.x - round(scene.camera.size.x / 2),
+                                        scene.camera.position.y - round(scene.camera.size.y / 2))
         region_end: Vector2 = Vector2(region_start.x + scene.camera.size.x,
                                       region_start.y + scene.camera.size.y)
 
         # Смещение камеры для правильной отрисовки объектов
-        camera_offset = scene.camera.transform.position - (scene.camera.size / 2)
+        camera_offset = scene.camera.position - (scene.camera.size / 2)
 
         visible_objects = [obj for obj in scene.objects if obj.visible]
         points_without_culling: list[Point] = []
@@ -62,19 +58,5 @@ class RenderCore:
 
         # Рисуем точки
         for point in points_with_culling:
-            RenderCore.__draw_point(Point(point.sign, point.offset - camera_offset))
-
-
-    @staticmethod
-    def __draw_point(point: Point):
-        window.addch(point.offset.y, point.offset.x, point.sign)
-
-    @staticmethod
-    def __draw_object(obj: BaseObject):
-        texture = obj.get_component(Texture)
-        for point in texture.get():
-            pos = obj.transform.position + point.offset
-            try:
-                window.addch(pos.y, pos.x, point.sign)
-            except curses.error:
-                continue
+            point_pos = point.offset - camera_offset
+            window.addch(point_pos.y, point_pos.x, point.sign)

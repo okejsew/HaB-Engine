@@ -21,5 +21,4 @@ class Rectangle(BaseObject):
         for y in range(start_y, end_y):
             for x in range(start_x, end_x):
                 texture.add_point(Point(sign, Vector2(x, y)))
-
         return texture

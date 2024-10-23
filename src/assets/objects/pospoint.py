@@ -9,7 +9,7 @@ class PositionPointTexture(Texture):
         self.add_point(Point('*', Vector2(0, 0)))
 
     def get(self):
-        pos = str(self.owner.transform.position)
+        pos = str(self.owner.position)
         self._points.clear()
         self._points.append(Point('*', Vector2(0, 0)))
         for i in range(len(pos)):

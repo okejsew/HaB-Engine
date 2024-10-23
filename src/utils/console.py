@@ -1,6 +1,5 @@
 import _curses
 import curses
-from curses import *
 
 window: _curses.window = curses.initscr()
 window.border(0)

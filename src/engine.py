@@ -1,12 +1,13 @@
-import curses
 import time
+import curses
 from threading import Thread
-from time import sleep
 from typing import Callable
-from src.base.errors import MissingSceneError
+
 from src.base.scene import Scene
-from src.core.physics import PhisycsCore
+from src.base.errors import MissingSceneError
+
 from src.core.render import RenderCore
+from src.core.physics import PhisycsCore
 
 
 class Engine:
@@ -31,8 +32,8 @@ class Engine:
     def __debug_info():
         RenderCore.print(1, 1, f'Текущая сцена: {Engine.__current_scene}')
         RenderCore.print(2, 1, f'Кол-во объектов на сцене: {len(Engine.__current_scene.objects)}')
-
-
+        RenderCore.print(3, 1, f'Время на кадр (Рендер)(Основной поток): {round(Engine.frame_time, 2)}')
+        RenderCore.print(4, 1, f'Время на кадр (Физика)(Второй поток): {round(PhisycsCore.frame_time, 2)}')
 
     @staticmethod
     @__check_scene
@@ -40,11 +41,13 @@ class Engine:
         Engine.is_working = True
         Thread(target=Engine.__physics_thread).start()
         while Engine.is_working:
+            start_time = time.time()
             RenderCore.clear()
-            RenderCore.draw_objects(Engine.__current_scene)
             if Engine.debug_mode:
                 Engine.__debug_info()
+            RenderCore.draw_objects(Engine.__current_scene)
             RenderCore.refresh()
+            Engine.frame_time = time.time() - start_time
 
     @staticmethod
     def end():
@@ -65,4 +68,4 @@ class Engine:
     def __physics_thread():
         while Engine.is_working:
             PhisycsCore.handle(Engine.__current_scene)
-            sleep(0.016)
+            time.sleep(0.016)

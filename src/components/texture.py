@@ -22,7 +22,7 @@ class Texture(BaseComponent):
 
     def _convert_to_global(self) -> list[Point]:
         """Переводит все точки в глобальную систему координат"""
-        return [Point(p.sign, p.offset + self.owner.transform.position) for p in self._points]
+        return [Point(p.sign, p.offset + self.owner.position) for p in self._points]
 
     def add_point(self, point: Point):
         self._points.append(point)
@@ -37,4 +37,3 @@ class Texture(BaseComponent):
                         x, y = pos.split(',')
                     except ValueError: raise TextureFileSyntaxIncorrect(line)
                     else: self._points.append(Point(sign.strip(), Vector2(int(x), int(y))))
-
