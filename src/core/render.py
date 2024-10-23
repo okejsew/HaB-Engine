@@ -1,34 +1,38 @@
+import time
 from src.components.texture import Texture, Point
 from src.base.errors import MissingCameraOnScene
 from src.base.scene import Scene
 from src.utils.console import window
-from src.utils.vector import Vector2
-
-
-def in_region(reg_start: Vector2, reg_end: Vector2, point: Vector2) -> bool:
-    return (reg_start.x < point.x < reg_end.x) and (reg_start.y <= point.y < reg_end.y)
+from src.utils.vector import Vector2, in_region
 
 class RenderSettings:
     camera_culling: bool = True
 
 class RenderCore:
-    @staticmethod
-    def clear():
-        window.clear()
+    frame_time: float = time.time()
 
     @staticmethod
-    def refresh():
-        window.refresh()
+    def runtime(func):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            func(*args, **kwargs)
+            RenderCore.frame_time = time.time() - start_time
+        return wrapper
+
+    @staticmethod
+    def clear(): window.clear()
+
+    @staticmethod
+    def refresh(): window.refresh()
 
     @staticmethod
     def print(y: int, x: int, info: str):
         window.addstr(y, x, info)
 
     @staticmethod
-    def draw_objects(scene: Scene):
+    def render_scene_frame(scene: Scene):
         if scene.camera is None:
-            window.addch(7, 1, 'HEllo!')
-            raise MissingCameraOnScene(scene)
+            MissingCameraOnScene(scene)
 
         # Определение региона камеры (границ)
         region_start: Vector2 = Vector2(scene.camera.position.x - round(scene.camera.size.x / 2),
@@ -61,3 +65,14 @@ class RenderCore:
         for point in points_with_culling:
             point_pos = point.offset - camera_offset
             window.addch(point_pos.y, point_pos.x, point.sign)
+
+    @staticmethod
+    @runtime
+    def render():
+        from src.engine import Engine
+        RenderCore.clear()
+        if Engine.debug_mode:
+            Engine.print_debug_info()
+        RenderCore.render_scene_frame(Engine.current_scene)
+        RenderCore.refresh()
+

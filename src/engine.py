@@ -10,62 +10,40 @@ from src.core.physics import PhisycsCore
 
 
 class Engine:
-    __current_scene: Scene | None = None
-    __threads: list[Thread] = []
+    current_scene: Scene | None = None
+    threads: list[Thread] = []
     is_working: bool = False
     debug_mode: bool = False
     frame_time: float = time.time()
 
     @staticmethod
-    def set_scene(scene: Scene):
-        Engine.__current_scene = scene
-
-    @staticmethod
-    def __check_scene(func: Callable) -> Callable:
-        def wrapper(*args, **kwargs):
-            if Engine.__current_scene is None:
-                raise MissingSceneError()
-            return func(*args, **kwargs)
-        return wrapper
-
-    @staticmethod
-    def __debug_info():
-        RenderCore.print(1, 1, f'Текущая сцена: {Engine.__current_scene}')
-        RenderCore.print(2, 1, f'Кол-во объектов на сцене: {len(Engine.__current_scene.objects)}')
-        RenderCore.print(3, 1, f'Время на кадр (Рендер)(Основной поток): {round(Engine.frame_time, 2)}')
+    def print_debug_info():
+        RenderCore.print(1, 1, f'Текущая сцена: {Engine.current_scene}')
+        RenderCore.print(2, 1, f'Кол-во объектов на сцене: {len(Engine.current_scene.objects)}')
+        RenderCore.print(3, 1, f'Время на кадр (Рендер)(Основной поток): {round(RenderCore.frame_time, 2)}')
         RenderCore.print(4, 1, f'Время на кадр (Физика)(Второй поток): {round(PhisycsCore.frame_time, 2)}')
 
     @staticmethod
-    @__check_scene
     def run():
+        if Engine.current_scene is None:
+            MissingSceneError()
         Engine.is_working = True
-        Engine.__start_physic()
+        Engine.start_thread(PhisycsCore.thread)
+        Engine.main_thread()
+
+    @staticmethod
+    def main_thread():
         while Engine.is_working:
-            start_time = time.time()
-            Engine.__draw_frame()
-            Engine.frame_time = time.time() - start_time
+            RenderCore.render()
 
     @staticmethod
-    def __draw_frame():
-        RenderCore.clear()
-        if Engine.debug_mode: Engine.__debug_info()
-        RenderCore.draw_objects(Engine.__current_scene)
-        RenderCore.refresh()
+    def start_thread(func: Callable):
+        thread = Thread(target=func)
+        Engine.threads.append(thread)
+        thread.start()
 
     @staticmethod
-    def __close_threads():
-        for thread in Engine.__threads:
+    def end_all_threads():
+        for thread in Engine.threads:
             thread.join()
-
-    @staticmethod
-    def __start_physic():
-        pt = Thread(target=Engine.__physics_thread)
-        Engine.__threads.append(pt)
-        pt.start()
-
-    @staticmethod
-    @__check_scene
-    def __physics_thread():
-        while Engine.is_working:
-            PhisycsCore.handle(Engine.__current_scene)
-            time.sleep(0.016)
+        Engine.threads.clear()

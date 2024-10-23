@@ -49,5 +49,5 @@ class Texture(BaseComponent):
                 try:
                     sign, pos = line.split(';')
                     x, y = pos.split(',')
-                except ValueError: raise TextureFileSyntaxIncorrect(line)
+                except ValueError: TextureFileSyntaxIncorrect(line)
                 else: self.points.append(Point(sign.strip(), Vector2(int(x), int(y))))

@@ -1,9 +1,12 @@
 import curses
 
-class Error(Exception):
+class Error:
     def __init__(self, *args):
+        #from src.engine import Engine
+        #Engine.close_threads()
         curses.endwin()
-        super().__init__(*args)
+        input(f'{self.__class__.__name__}: {"".join(args)}', )
+        exit()
 
 
 class ComponentError(Error): ...

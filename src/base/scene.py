@@ -18,17 +18,15 @@ class Scene:
         if obj not in self.objects:
             self.objects.append(obj)
             obj.scene = self
-        else:
-            raise ObjectAlreadyAdded(obj, self)
+        else: ObjectAlreadyAdded(obj, self)
 
     def get(self, name: str) -> BaseObject:
         for obj in self.objects:
             if obj.name == name:
                 return obj
-        raise ObjectNotFound(name, self)
+        ObjectNotFound(name, self)
 
     def remove(self, obj: BaseObject):
         if obj in self.objects:
             self.objects.remove(obj)
-        else:
-            raise ObjectNotFound(obj, self)
+        else: ObjectNotFound(obj, self)

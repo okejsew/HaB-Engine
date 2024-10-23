@@ -6,7 +6,7 @@ from src.engine import Engine
 
 
 scene = Scene()
-Engine.set_scene(scene)
+Engine.current_scene = scene
 Engine.debug_mode = True
 r = PositionPoint()
 r.position = Vector2(10, 10)

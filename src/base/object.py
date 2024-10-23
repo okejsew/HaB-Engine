@@ -38,7 +38,7 @@ class BaseObject:
             if c is component:
                 self.__components.remove(c)
                 return
-        raise ComponentNotFound(component, self)
+        ComponentNotFound(component, self)
 
     def __str__(self):
         return f'BaseObject[{self.name=}]'

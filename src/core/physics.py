@@ -26,3 +26,10 @@ class PhisycsCore:
             if rigidbody:
                 rigidbody.update()
         PhisycsCore.frame_time = time.time() - start_time
+
+    @staticmethod
+    def thread():
+        from src.engine import Engine
+        while Engine.is_working:
+            PhisycsCore.handle(Engine.current_scene)
+            time.sleep(0.016)
