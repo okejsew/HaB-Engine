@@ -5,19 +5,24 @@ from src.utils.vector import Vector2
 
 class PositionPointTexture(Texture):
     def __init__(self):
+        """
+        Текстура для позиционной точки\n
+        Всё просто - каждый раз как рендеркор запрашивает готовые точки текстуры,
+        этот компонент возвращает точки в виде надписи координат объекта\n
+        Простой пример написания своей текстуры
+        """
         super().__init__()
-        self.add_point(Point('*', Vector2(0, 0)))
 
     def get(self):
         pos = str(self.owner.position)
-        self._points.clear()
-        self._points.append(Point('*', Vector2(0, 0)))
+        points: list[Point] = [Point('*', Vector2(0, 0))]
         for i in range(len(pos)):
-            self.add_point(Point(pos[i], Vector2(i+2, 0)))
-        return self._convert_to_global()
+            points.append(Point(pos[i], Vector2(i+2, 0)))
+        return self._convert_to_global(points)
 
 class PositionPoint(BaseObject):
     def __init__(self):
+        """Объект, который выглядит как точка и рядом с ней ее координаты"""
         super().__init__()
         self.name = 'Position Point'
         self.add_component(PositionPointTexture())

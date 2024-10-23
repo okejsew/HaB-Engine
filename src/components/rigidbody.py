@@ -3,6 +3,7 @@ from src.utils.vector import Vector2, Vector2F
 
 class Rigidbody(BaseComponent):
     def __init__(self):
+        """Компонент физики для объектов"""
         super().__init__()
         self.velocity: Vector2F = Vector2F()            # Скорость
         self.acceleration: Vector2F = Vector2F()        # Ускорение
@@ -14,12 +15,9 @@ class Rigidbody(BaseComponent):
         self.gravity = 0.981                # Сила гравитации
         self.max_fall_speed: float = 10     # Максимальная скорость падения
 
-
-
     def add_force(self, force: Vector2F):
         self.force += force
 
-    @BaseComponent.check_owner
     def update(self, delta_time: float = 0.05):
         if self.is_gravity:
             self.add_force(Vector2F(0, self.gravity * self.mass))  # Применяем гравитацию

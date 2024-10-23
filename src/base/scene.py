@@ -6,6 +6,10 @@ from src.base.object import BaseObject
 
 class Scene:
     def __init__(self):
+        """
+        Сцена - просто коробка для хранения объектов\n
+        Но также есть camera, отвечает за текущую камеру, которой как раз таки и будет всё отрисовываться
+        """
         self.objects: list[BaseObject] = []
         self.camera: Camera | None = Camera()
         self.objects.append(self.camera)

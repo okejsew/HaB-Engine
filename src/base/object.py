@@ -10,6 +10,12 @@ T = TypeVar('T')
 
 class BaseObject:
     def __init__(self):
+        """
+        Базовый класс для объекта в движке\n
+        name -- Имя объекта, отображается при дебаггинге\n
+        visible -- будет ли объект отрисовываться (если у него конечно есть текстура)\n
+        Можно добавлять, убирать и получать компоненты в зависимости от надобности
+        """
         self.name: str = 'BaseObject'
         self.visible: bool = True
         self.__components: list['BaseComponent'] = []

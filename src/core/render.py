@@ -27,6 +27,7 @@ class RenderCore:
     @staticmethod
     def draw_objects(scene: Scene):
         if scene.camera is None:
+            window.addch(7, 1, 'HEllo!')
             raise MissingCameraOnScene(scene)
 
         # Определение региона камеры (границ)

@@ -1,5 +1,4 @@
 import time
-import curses
 from threading import Thread
 from typing import Callable
 
@@ -12,6 +11,7 @@ from src.core.physics import PhisycsCore
 
 class Engine:
     __current_scene: Scene | None = None
+    __threads: list[Thread] = []
     is_working: bool = False
     debug_mode: bool = False
     frame_time: float = time.time()
@@ -39,29 +39,29 @@ class Engine:
     @__check_scene
     def run():
         Engine.is_working = True
-        Thread(target=Engine.__physics_thread).start()
+        Engine.__start_physic()
         while Engine.is_working:
             start_time = time.time()
-            RenderCore.clear()
-            if Engine.debug_mode:
-                Engine.__debug_info()
-            RenderCore.draw_objects(Engine.__current_scene)
-            RenderCore.refresh()
+            Engine.__draw_frame()
             Engine.frame_time = time.time() - start_time
 
     @staticmethod
-    def end():
-        Engine.is_working = False
-        curses.endwin()
+    def __draw_frame():
+        RenderCore.clear()
+        if Engine.debug_mode: Engine.__debug_info()
+        RenderCore.draw_objects(Engine.__current_scene)
+        RenderCore.refresh()
 
     @staticmethod
-    def __drawing_thread():
-        while Engine.is_working:
-            RenderCore.clear()
-            RenderCore.draw_objects(Engine.__current_scene)
-            if Engine.debug_mode:
-                Engine.__debug_info()
-            RenderCore.refresh()
+    def __close_threads():
+        for thread in Engine.__threads:
+            thread.join()
+
+    @staticmethod
+    def __start_physic():
+        pt = Thread(target=Engine.__physics_thread)
+        Engine.__threads.append(pt)
+        pt.start()
 
     @staticmethod
     @__check_scene
