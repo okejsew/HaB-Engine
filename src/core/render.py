@@ -26,8 +26,12 @@ class RenderCore:
     def refresh(): window.refresh()
 
     @staticmethod
-    def print(y: int, x: int, info: str):
-        window.addstr(y, x, info)
+    def print_debug_info():
+        from src.engine import Engine
+        if Engine.debug_mode:
+            text = Engine.debug_info().split('\n')
+            for line in range(len(text)):
+                window.addstr(line, 1, text[line])
 
     @staticmethod
     def render_scene_frame(scene: Scene):
@@ -67,12 +71,12 @@ class RenderCore:
             window.addch(point_pos.y, point_pos.x, point.sign)
 
     @staticmethod
-    @runtime
     def render():
+        start_time = time.time()
         from src.engine import Engine
         RenderCore.clear()
-        if Engine.debug_mode:
-            Engine.print_debug_info()
+        RenderCore.print_debug_info()
         RenderCore.render_scene_frame(Engine.current_scene)
         RenderCore.refresh()
+        RenderCore.frame_time = time.time() - start_time
 

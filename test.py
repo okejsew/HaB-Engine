@@ -11,5 +11,6 @@ Engine.debug_mode = True
 r = PositionPoint()
 r.position = Vector2(10, 10)
 r.add_component(Rigidbody())
+rb = r.get_component(Rigidbody)
 scene.add(r)
 Engine.run()

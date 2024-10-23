@@ -17,8 +17,8 @@ class PositionPointTexture(Texture):
         pos = str(self.owner.position)
         points: list[Point] = [Point('*', Vector2(0, 0))]
         for i in range(len(pos)):
-            points.append(Point(pos[i], Vector2(i+2, 0)))
-        return self._convert_to_global(points)
+            points.append(Point(pos[i], Vector2(i+20, 10)))
+        return points
 
 class PositionPoint(BaseObject):
     def __init__(self):

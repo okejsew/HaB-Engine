@@ -7,7 +7,7 @@ from src.base.errors import MissingSceneError
 
 from src.core.render import RenderCore
 from src.core.physics import PhisycsCore
-
+from src.core.universal import UniversalCore
 
 class Engine:
     current_scene: Scene | None = None
@@ -17,11 +17,16 @@ class Engine:
     frame_time: float = time.time()
 
     @staticmethod
-    def print_debug_info():
-        RenderCore.print(1, 1, f'Текущая сцена: {Engine.current_scene}')
-        RenderCore.print(2, 1, f'Кол-во объектов на сцене: {len(Engine.current_scene.objects)}')
-        RenderCore.print(3, 1, f'Время на кадр (Рендер)(Основной поток): {round(RenderCore.frame_time, 2)}')
-        RenderCore.print(4, 1, f'Время на кадр (Физика)(Второй поток): {round(PhisycsCore.frame_time, 2)}')
+    def debug_info() -> str:
+        return f"""
+Текущая сцена: {Engine.current_scene}
+Кол-во объектов на сцене: {len(Engine.current_scene.objects)}
+Время на кадр (Рендер) (Основной поток): {round(RenderCore.frame_time, 2)}
+Время на кадр (Физика) (2 поток):        {round(PhisycsCore.frame_time, 2)}
+Время на кадр (УЯД)    (3 поток):        {round(UniversalCore.frame_time, 2)}
+Кадров в секунду: ~{round(1 / RenderCore.frame_time, 2)}
+"""
+
 
     @staticmethod
     def run():
@@ -29,6 +34,7 @@ class Engine:
             MissingSceneError()
         Engine.is_working = True
         Engine.start_thread(PhisycsCore.thread)
+        Engine.start_thread(UniversalCore.thread)
         Engine.main_thread()
 
     @staticmethod
