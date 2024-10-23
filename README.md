@@ -9,7 +9,7 @@ scene = Scene()
 ## Устанавливаем текущую сцену в движке, чтобы он обрабатывал именно ее:
 ```python
 from src.engine import Engine
-Engine.set_scene(scene)
+Engine.current_scene = scene
 ```
 
 Можем включить debug mode, он будет показывать некоторые значение в левом верхнем углу экрана:
