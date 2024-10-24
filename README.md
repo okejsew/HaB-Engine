@@ -1,5 +1,3 @@
-from src.assets.scripts.test_script import TestScript
-
 # HaB-Engine
 Консольный движок, основанный на python и windows-curses.
 Фичи обычных движок в консоли: физика, скрипты, текстуры и много другое.
