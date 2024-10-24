@@ -33,6 +33,13 @@ class BaseObject:
             if isinstance(component, t):
                 return component
 
+    def get_all_component(self, t: Type[T]) -> list[Optional[T]] | None:
+        result: list[Optional[T]] = []
+        for component in self.__components:
+            if isinstance(component, t):
+                result.append(component)
+        return result
+
     def remove_component(self, component: 'BaseComponent'):
         for c in self.__components:
             if c is component:

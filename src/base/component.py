@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from src.base.object import BaseObject
@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 class BaseComponent:
     def __init__(self):
         """Базовый класс для создания компонента"""
-        self.owner: 'BaseObject' or None = None
+        self.owner: Optional['BaseObject'] = None
 
     def __str__(self):
         return f'Component[t={self.__class__.__name__}]'

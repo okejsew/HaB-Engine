@@ -1,3 +1,5 @@
+from typing import Optional
+
 from src.assets.objects.camera import Camera
 from src.base.errors import ObjectNotFound
 from src.base.errors import ObjectAlreadyAdded
@@ -11,7 +13,7 @@ class Scene:
         Но также есть camera, отвечает за текущую камеру, которой как раз таки и будет всё отрисовываться
         """
         self.objects: list[BaseObject] = []
-        self.camera: Camera | None = Camera()
+        self.camera: Optional[Camera] = Camera()
         self.objects.append(self.camera)
 
     def add(self, obj: BaseObject):

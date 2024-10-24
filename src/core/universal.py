@@ -15,15 +15,17 @@ class UniversalCore:
 
     @staticmethod
     def handle(scene: Scene):
+        start_time = time.time()
         for obj in scene.objects:
             if not in_region(Vector2(-1000000000, -1000000000),
                              Vector2(1000000000, 1000000000), obj.position):
                 UniversalCore.destroy(obj)
+        UniversalCore.frame_time = time.time() - start_time
 
     @staticmethod
     def thread():
         from src.engine import Engine
         while Engine.is_working:
-            start_time = time.time()
+
             UniversalCore.handle(Engine.current_scene)
-            UniversalCore.frame_time = time.time() - start_time
+
