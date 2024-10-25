@@ -1,4 +1,5 @@
 from src.api import *
+from src.assets.scripts.movement import BasicMovement
 
 # Создание сцены и настройка движка
 scene = Scene()
@@ -22,12 +23,7 @@ t = Texture()
 t.load('src/assets/textures/test.tx')
 
 obj.add_component(t)
-obj.add_component(Rigidbody())
-
-ct = CameraTracking()
-ct.target = obj
-scene.camera.add_component(ct)
-
+obj.add_component(BasicMovement())
 
 # Запускаем движок
 Engine.run()
