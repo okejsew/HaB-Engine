@@ -61,14 +61,14 @@ pos = Vector2(5, 10) # Вектор2 типа int, потому что мы в �
 ```python
 from src.components.texture import Texture
 from src.components.rigidbody import Rigidbody
-from src.assets.scripts.test_script import TestScript
+from src.assets.scripts.test_script import CameraTracking
 
 from src.base.object import BaseObject
 
 obj = BaseObject()
-obj.add_component(Texture()) # Текстура
-obj.add_component(Rigidbody()) # Физика
-obj.add_component(TestScript()) # Скрипт
+obj.add_component(Texture())  # Текстура
+obj.add_component(Rigidbody())  # Физика
+obj.add_component(CameraTracking())  # Скрипт
 
 # Аналогично, можно их получать и использовать
 texture = obj.get_component(Texture)

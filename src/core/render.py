@@ -1,4 +1,5 @@
 import time
+
 from src.components.texture import Texture, Point
 from src.base.errors import MissingCameraOnScene
 from src.base.scene import Scene
@@ -7,34 +8,13 @@ from src.utils.vector import Vector2, in_region
 
 class RenderSettings:
     camera_culling: bool = True
+    show_fps: bool = True
 
 class RenderCore:
-    frame_time: float = time.time()
+    fps: float = time.time()
 
     @staticmethod
-    def runtime(func):
-        def wrapper(*args, **kwargs):
-            start_time = time.time()
-            func(*args, **kwargs)
-            RenderCore.frame_time = time.time() - start_time
-        return wrapper
-
-    @staticmethod
-    def clear(): window.clear()
-
-    @staticmethod
-    def refresh(): window.refresh()
-
-    @staticmethod
-    def print_debug_info():
-        from src.engine import Engine
-        if Engine.debug_mode:
-            text = Engine.debug_info().split('\n')
-            for line in range(len(text)):
-                window.addstr(line, 1, text[line])
-
-    @staticmethod
-    def render_scene_frame(scene: Scene):
+    def render_objects(scene: Scene):
         if scene.camera is None:
             MissingCameraOnScene(scene)
 
@@ -71,12 +51,18 @@ class RenderCore:
             window.addch(point_pos.y, point_pos.x, point.sign)
 
     @staticmethod
-    def render():
-        start_time = time.time()
-        from src.engine import Engine
-        RenderCore.clear()
-        RenderCore.print_debug_info()
-        RenderCore.render_scene_frame(Engine.current_scene)
-        RenderCore.refresh()
-        RenderCore.frame_time = time.time() - start_time
+    def render_special():
+        if RenderSettings.show_fps:
+            window.addstr(window.getmaxyx()[0]-1, 0, f'Кадров в секунду: ~{RenderCore.fps}')
 
+    @staticmethod
+    def calc_fps(start_time: float):
+        t = time.time() - start_time
+        RenderCore.fps = round(1 / t, 2) if t > 0 else RenderCore.fps
+
+    @staticmethod
+    def render(scene: Scene):
+        window.clear()
+        RenderCore.render_objects(scene)
+        RenderCore.render_special()
+        window.refresh()

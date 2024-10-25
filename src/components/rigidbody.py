@@ -3,7 +3,6 @@ from src.utils.vector import Vector2, Vector2F
 
 class Rigidbody(BaseComponent):
     def __init__(self):
-        """Компонент физики для объектов"""
         super().__init__()
         self.velocity: Vector2F = Vector2F()            # Скорость
         self.acceleration: Vector2F = Vector2F()        # Ускорение

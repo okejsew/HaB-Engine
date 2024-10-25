@@ -11,41 +11,34 @@ T = TypeVar('T')
 
 class BaseObject:
     def __init__(self):
-        """
-        Базовый класс для объекта в движке\n
-        name -- Имя объекта, отображается при дебаггинге\n
-        visible -- будет ли объект отрисовываться (если у него конечно есть текстура)\n
-        Можно добавлять, убирать и получать компоненты в зависимости от надобности
-        """
         self.name: str = 'BaseObject'
         self.visible: bool = True
-        self.__components: list['BaseComponent'] = []
+        self.components: list['BaseComponent'] = []
         self.position: Vector2 = Vector2()
         self.scene: 'Scene' or None = None
 
     def add_component(self, component: 'BaseComponent'):
-        if component not in self.__components:
-            self.__components.append(component)
+        if component not in self.components:
+            self.components.append(component)
             component.owner = self
 
-    def get_component(self, t: Type[T]) -> Optional[T] | None:
-        for component in self.__components:
+    def get_component(self, t: Type[T]) -> Optional[T]:
+        for component in self.components:
             if isinstance(component, t):
                 return component
 
-    def get_all_component(self, t: Type[T]) -> list[Optional[T]] | None:
+    def get_components(self, t: Type[T]) -> list[Optional[T]]:
         result: list[Optional[T]] = []
-        for component in self.__components:
+        for component in self.components:
             if isinstance(component, t):
                 result.append(component)
         return result
 
-    def remove_component(self, component: 'BaseComponent'):
-        for c in self.__components:
+    def remove_component(self, component: 'BaseComponent', ignore: bool = False):
+        for c in self.components:
             if c is component:
-                self.__components.remove(c)
-                return
-        ComponentNotFound(component, self)
+                return self.components.remove(c)
+        if ignore: ComponentNotFound(component, self)
 
     def __str__(self):
         return f'BaseObject[{self.name=}]'

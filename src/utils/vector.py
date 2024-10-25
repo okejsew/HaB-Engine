@@ -37,6 +37,9 @@ class Vector2:
     def __str__(self):
         return f"Vector2({self.x}, {self.y})"
 
+    def copy(self):
+        return Vector2(self.x, self.y)
+
 class Vector2F:
     def __init__(self, x: float = 0, y: float = 0):
         self.x: float = x
@@ -84,6 +87,9 @@ class Vector2F:
 
     def __str__(self):
         return f"Vector2F({self.x}, {self.y})"
+
+    def copy(self):
+        return Vector2F(self.x, self.y)
 
 def in_region(reg_start: Vector2, reg_end: Vector2, point: Vector2) -> bool:
     return (reg_start.x < point.x < reg_end.x) and (reg_start.y <= point.y < reg_end.y)

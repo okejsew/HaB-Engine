@@ -15,20 +15,6 @@ class Engine:
     threads: list[Thread] = []
     is_working: bool = False
     debug_mode: bool = False
-    frame_time: float = time.time()
-
-    @staticmethod
-    def debug_info() -> str:
-        return f"""
-Текущая сцена: {Engine.current_scene}
-Кол-во объектов на сцене: {len(Engine.current_scene.objects)}
-Время на кадр (Рендер) (Основной поток/1): {round(RenderCore.frame_time, 2)}
-Время на кадр (УЯД)    (Основной поток/2): {round(UniversalCore.frame_time, 2)}
-Время на кадр (Скрипты)(Основной поток/3): {round(ScriptCore.frame_time, 2)}
-Время на кадр (Физика) (2 поток):          {round(PhisycsCore.frame_time, 2)}
-Кадров в секунду: ~{round(1 / RenderCore.frame_time, 2) if RenderCore.frame_time != 0 else '?'}
-"""
-
 
     @staticmethod
     def run():
@@ -41,9 +27,11 @@ class Engine:
     @staticmethod
     def main_thread():
         while Engine.is_working:
-            RenderCore.render()
+            start_time = time.time()
+            RenderCore.render(Engine.current_scene)
             UniversalCore.handle(Engine.current_scene)
             ScriptCore.handle(Engine.current_scene)
+            RenderCore.calc_fps(start_time)
 
     @staticmethod
     def start_thread(func: Callable):
