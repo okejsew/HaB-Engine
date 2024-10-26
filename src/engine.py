@@ -26,6 +26,7 @@ class Engine:
 
     @staticmethod
     def main_thread():
+        ScriptCore.awake(Engine.current_scene)
         while Engine.is_working:
             start_time = time.time()
             RenderCore.render(Engine.current_scene)

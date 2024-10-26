@@ -1,5 +1,6 @@
 import time
 from threading import Thread
+from typing import Optional
 
 from src.base.component import BaseComponent
 from src.base.errors import AnimationFileSyntaxIncorrect
@@ -18,6 +19,7 @@ class Animator(BaseComponent):
         self.loop: int = 1
         self.frames: list[Frame] = []
         self.is_animating: bool = False
+        self.thread: Optional[Thread] = None
 
     def load(self, path: str):
         file = open(path, 'r', encoding='utf-8')
@@ -40,6 +42,9 @@ class Animator(BaseComponent):
 
         file.close()
 
+    def end(self):
+        self.is_animating = False
+
     def start(self):
         self.is_animating = True
         Thread(target=self.animating).start()
@@ -60,5 +65,7 @@ class Animator(BaseComponent):
         else:
             i = 0
             while i < self.loop:
+                if not self.is_animating:
+                    break
                 do_anim()
                 i += 1

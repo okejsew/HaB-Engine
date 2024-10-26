@@ -7,3 +7,6 @@ class Script(BaseComponent):
 
     def fixed_update(self):
         pass
+
+    def awake(self):
+        pass
