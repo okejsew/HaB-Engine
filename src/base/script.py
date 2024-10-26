@@ -1,5 +1,4 @@
 from src.base.component import BaseComponent
-from src.base.object import BaseObject
 
 
 class Script(BaseComponent):

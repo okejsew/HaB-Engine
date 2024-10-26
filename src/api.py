@@ -6,3 +6,5 @@ from src.components.texture import Texture
 from src.utils.vector import Vector2
 from src.base.scene import Scene
 from src.engine import Engine
+from src.assets.scripts.movement import BasicMovement
+from src.base.animator import Animator
