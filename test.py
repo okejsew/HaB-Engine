@@ -1,5 +1,9 @@
-from src.api import *
-
+from src.base.animator import Animator
+from src.base.object import BaseObject
+from src.base.scene import Scene
+from src.components.texture import Texture
+from src.engine import Engine
+from src.utils.vector import Vector2
 
 # Создание сцены и настройка движка
 scene = Scene()
@@ -17,7 +21,6 @@ scene.add(obj)
 # Настраиваем и добавляем компоненты
 obj.add_component(Texture())
 
-obj.add_component(BasicMovement())
 obj.add_component(Animator())
 
 obj.get_component(Texture).load('src/assets/textures/test.tx')

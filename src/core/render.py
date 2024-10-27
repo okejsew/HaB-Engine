@@ -1,14 +1,16 @@
 import time
 
-from src.components.texture import Texture, Point
 from src.base.errors import MissingCameraOnScene
 from src.base.scene import Scene
+from src.components.texture import Texture, Point
 from src.utils.console import window
 from src.utils.vector import Vector2, in_region
+
 
 class RenderSettings:
     camera_culling: bool = True
     show_fps: bool = True
+
 
 class RenderCore:
     fps: float = time.time()
@@ -53,7 +55,7 @@ class RenderCore:
     @staticmethod
     def render_special():
         if RenderSettings.show_fps:
-            window.addstr(window.getmaxyx()[0]-1, 0, f'Кадров в секунду: ~{RenderCore.fps}')
+            window.addstr(window.getmaxyx()[0] - 1, 0, f'Кадров в секунду: ~{RenderCore.fps}')
 
     @staticmethod
     def calc_fps(start_time: float):

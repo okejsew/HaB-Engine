@@ -2,13 +2,13 @@ import time
 from threading import Thread
 from typing import Callable, Optional
 
-from src.base.scene import Scene
 from src.base.errors import MissingSceneError
-
-from src.core.render import RenderCore
+from src.base.scene import Scene
 from src.core.physics import PhisycsCore
+from src.core.render import RenderCore
 from src.core.script import ScriptCore
 from src.core.universal import UniversalCore
+
 
 class Engine:
     current_scene: Optional[Scene] = None

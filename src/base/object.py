@@ -9,6 +9,7 @@ if TYPE_CHECKING:
 
 T = TypeVar('T')
 
+
 class BaseObject:
     def __init__(self):
         self.name: str = 'BaseObject'

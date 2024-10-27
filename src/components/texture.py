@@ -2,6 +2,7 @@ from src.base.component import BaseComponent
 from src.base.errors import TextureFileSyntaxIncorrect
 from src.utils.vector import Vector2
 
+
 class Point:
     def __init__(self, sign: str, offset: Vector2):
         self.sign: str = sign
@@ -9,6 +10,7 @@ class Point:
 
     def __str__(self):
         return f'Point[pos={self.offset}, sign={self.sign}]'
+
 
 class Texture(BaseComponent):
     def __init__(self):
@@ -29,6 +31,8 @@ class Texture(BaseComponent):
             try:
                 sign, pos = line.split(';')
                 x, y = pos.split(',')
-            except ValueError: TextureFileSyntaxIncorrect(line)
-            else: self.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
+            except ValueError:
+                TextureFileSyntaxIncorrect(line)
+            else:
+                self.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
         file.close()

@@ -1,7 +1,7 @@
 import time
 
-from src.components.rigidbody import Rigidbody
 from src.base.scene import Scene
+from src.components.rigidbody import Rigidbody
 
 
 class PhisycsCore:

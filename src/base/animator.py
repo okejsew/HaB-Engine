@@ -13,6 +13,7 @@ class Frame:
         self.points: list[Point] = []
         self.time: float = 0
 
+
 class Animator(BaseComponent):
     def __init__(self):
         super().__init__()
@@ -37,8 +38,10 @@ class Animator(BaseComponent):
                 try:
                     sign, pos = line.split(';')
                     x, y = pos.split(',')
-                except ValueError: AnimationFileSyntaxIncorrect(line)
-                else: current_frame.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
+                except ValueError:
+                    AnimationFileSyntaxIncorrect(line)
+                else:
+                    current_frame.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
 
         file.close()
 

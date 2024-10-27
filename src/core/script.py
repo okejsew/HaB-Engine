@@ -1,6 +1,7 @@
 from src.base.scene import Scene
 from src.base.script import Script
 
+
 class ScriptCore:
     @staticmethod
     def get_scripts(scene: Scene):
