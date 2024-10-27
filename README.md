@@ -42,7 +42,7 @@ obj = BaseObject()
 
 obj.name = 'My first Object'   # Имя объекта
 obj.visible = False            # Его видимость (Если у него есть текстура конечно)
-obj.position = Vector2(5, 10)  # Его положение в пространстве
+obj.transform.position = Vector2(5, 10)  # Его положение в пространстве
 ```
 Позиционирование:
 ```python
@@ -61,14 +61,12 @@ pos = Vector2(5, 10) # Вектор2 типа int, потому что мы в �
 ```python
 from src.components.texture import Texture
 from src.components.rigidbody import Rigidbody
-from src.assets.scripts.test_script import CameraTracking
 
 from src.base.object import BaseObject
 
 obj = BaseObject()
 obj.add_component(Texture())  # Текстура
 obj.add_component(Rigidbody())  # Физика
-obj.add_component(CameraTracking())  # Скрипт
 
 # Аналогично, можно их получать и использовать
 texture = obj.get_component(Texture)
