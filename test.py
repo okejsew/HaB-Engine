@@ -1,5 +1,6 @@
 from src.base.object import BaseObject
 from src.base.scene import Scene
+from src.components.rigidbody import Rigidbody
 from src.components.texture import Texture
 from src.engine import Engine
 from src.utils.vector import Vector2
@@ -21,6 +22,8 @@ scene.add(obj)
 obj.add_component(Texture())
 
 obj.get_component(Texture).load('src/assets/textures/test.tx')
+
+obj.add_component(Rigidbody())
 
 # Запускаем движок
 Engine.run()

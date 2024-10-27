@@ -29,11 +29,8 @@ class Rigidbody(BaseComponent):
         if self.velocity.length() > self.max_fall_speed:
             self.velocity = self.velocity.normalized() * self.max_fall_speed
 
-        # Если остаток скорости > 0 но < 1, сохраняем его на след. шаг и добавляем там
+        # Перемещение: s = v * delta_time
         total_velocity: Vector2F = self.velocity * delta_time
-        total_velocity += self.velocity_remainder
-        int_velocity: Vector2 = total_velocity.to_int()
-        self.velocity_remainder = total_velocity - int_velocity
 
-        self.owner.transform.position += int_velocity
+        self.owner.transform.translate(total_velocity)
         self.force = Vector2F()

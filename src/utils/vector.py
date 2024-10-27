@@ -17,6 +17,7 @@ class Vector2:
         self.y += other.y
         return self
 
+
     def __isub__(self, other):
         self.x -= other.x
         self.y -= other.y
