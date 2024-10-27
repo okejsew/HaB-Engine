@@ -17,7 +17,7 @@ class BaseObject:
         self.visible: bool = True
         self.components: list['BaseComponent'] = []
         self.transform: Transform = Transform()
-        self.scene: 'Scene' or None = None
+        self.scene: Optional[Scene] = None
 
     def add_component(self, component: 'BaseComponent'):
         if component not in self.components:

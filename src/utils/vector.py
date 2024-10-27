@@ -103,3 +103,7 @@ class Direction:
     down = Vector2(0, 1)
     right = Vector2(1, 0)
     left = Vector2(-1, 0)
+    up_right = Vector2(1, -1)
+    up_left = Vector2(-1, -1)
+    down_right = Vector2(1, 1)
+    down_left = Vector2(-1, 1)
