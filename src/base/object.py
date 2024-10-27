@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, TypeVar, Type, Optional
 
 from src.base.errors import ComponentNotFound
+from src.components.transform import Transform
 from src.utils.vector import Vector2
 
 if TYPE_CHECKING:
@@ -15,7 +16,7 @@ class BaseObject:
         self.name: str = 'BaseObject'
         self.visible: bool = True
         self.components: list['BaseComponent'] = []
-        self.position: Vector2 = Vector2()
+        self.transform: Transform = Transform()
         self.scene: 'Scene' or None = None
 
     def add_component(self, component: 'BaseComponent'):

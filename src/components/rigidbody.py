@@ -35,5 +35,5 @@ class Rigidbody(BaseComponent):
         int_velocity: Vector2 = total_velocity.to_int()
         self.velocity_remainder = total_velocity - int_velocity
 
-        self.owner.position += int_velocity
+        self.owner.transform.position += int_velocity
         self.force = Vector2F()

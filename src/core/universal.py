@@ -12,7 +12,7 @@ class UniversalCore:
     @staticmethod
     def checking(obj: BaseObject):
         if not in_region(Vector2(-1000000000, -1000000000),
-                         Vector2(1000000000, 1000000000), obj.position):
+                         Vector2(1000000000, 1000000000), obj.transform.position):
             UniversalCore.destroy(obj)
 
     @staticmethod

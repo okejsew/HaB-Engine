@@ -21,13 +21,13 @@ class RenderCore:
             MissingCameraOnScene(scene)
 
         # Определение региона камеры (границ)
-        region_start: Vector2 = Vector2(scene.camera.position.x - round(scene.camera.size.x / 2),
-                                        scene.camera.position.y - round(scene.camera.size.y / 2))
+        region_start: Vector2 = Vector2(scene.camera.transform.position.x - round(scene.camera.size.x / 2),
+                                        scene.camera.transform.position.y - round(scene.camera.size.y / 2))
         region_end: Vector2 = Vector2(region_start.x + scene.camera.size.x,
                                       region_start.y + scene.camera.size.y)
 
         # Смещение камеры для правильной отрисовки объектов
-        camera_offset = scene.camera.position - (scene.camera.size / 2)
+        camera_offset = scene.camera.transform.position - (scene.camera.size / 2)
 
         visible_objects = [obj for obj in scene.objects if obj.visible]
         points_without_culling: list[Point] = []

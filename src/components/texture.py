@@ -21,7 +21,7 @@ class Texture(BaseComponent):
         return self.convert_to_global(self.points)
 
     def convert_to_global(self, points: list[Point]) -> list[Point]:
-        return [Point(p.sign, p.offset + self.owner.position) for p in points]
+        return [Point(p.sign, p.offset + self.owner.transform.position) for p in points]
 
     def load(self, path: str):
         self.points.clear()
