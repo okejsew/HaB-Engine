@@ -28,7 +28,7 @@ class Engine:
     def main_thread():
         ScriptCore.awake(Engine.current_scene)
         while Engine.is_working:
-            start_time = time.time()
+            start_time = time.perf_counter()
             RenderCore.render(Engine.current_scene)
             UniversalCore.handle(Engine.current_scene)
             ScriptCore.handle(Engine.current_scene)

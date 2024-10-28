@@ -59,7 +59,7 @@ class RenderCore:
 
     @staticmethod
     def calc_fps(start_time: float):
-        t = time.time() - start_time
+        t = time.perf_counter() - start_time
         RenderCore.fps = round(1 / t, 2) if t > 0 else RenderCore.fps
 
     @staticmethod
