@@ -6,6 +6,7 @@ class Transform(BaseComponent):
     def __init__(self):
         super().__init__()
         self.position: Vector2 = Vector2()
+        self.rotation: Vector2 = R
         self.moving_remainder: Vector2 = Vector2()
 
     def translate(self, moving_factor: Vector2 | Vector2F):

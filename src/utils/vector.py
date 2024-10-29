@@ -98,12 +98,20 @@ def in_region(reg_start: Vector2, reg_end: Vector2, point: Vector2) -> bool:
     return (reg_start.x < point.x < reg_end.x) and (reg_start.y <= point.y < reg_end.y)
 
 
-class Direction:
-    up = Vector2(0, -1)
-    down = Vector2(0, 1)
-    right = Vector2(1, 0)
-    left = Vector2(-1, 0)
-    up_right = Vector2(1, -1)
-    up_left = Vector2(-1, -1)
-    down_right = Vector2(1, 1)
-    down_left = Vector2(-1, 1)
+class Rotation:
+    up = 1
+    down = 2
+    left = 3
+    right = 4
+
+    @staticmethod
+    def to_right(vect: Vector2) -> Vector2:
+        return Vector2(-vect.y, vect.x)
+
+    @staticmethod
+    def to_left(vect: Vector2) -> Vector2:
+        return Vector2(vect.y, -vect.x)
+
+    @staticmethod
+    def to_down(vect: Vector2) -> Vector2:
+        return Vector2(-vect.x, -vect.x)
