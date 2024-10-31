@@ -1,10 +1,9 @@
 import time
 
-from src.base.object import BaseObject
 from src.base.scene import Scene
 from src.components.texture import Texture, Point
 from src.utils.console import window
-from src.utils.vector import Vector2, in_region
+from src.utils.vector import Vector2
 
 
 class RenderCore:
@@ -14,37 +13,30 @@ class RenderCore:
 
     @staticmethod
     def render_objects(scene: Scene):
-        for p in RenderCore.points_without_culling:
-            del p
-        for p in RenderCore.points_with_culling:
-            del p
+        del RenderCore.points_without_culling[:]
+        del RenderCore.points_with_culling[:]
         RenderCore.points_without_culling.clear()
         RenderCore.points_with_culling.clear()
 
-        region_start: Vector2 = Vector2(scene.camera.transform.position.x - round(scene.camera.size.x / 2),
-                                        scene.camera.transform.position.y - round(scene.camera.size.y / 2))
-        region_end: Vector2 = Vector2(region_start.x + scene.camera.size.x,
-                                      region_start.y + scene.camera.size.y)
+        cam_start: Vector2 = Vector2(scene.camera.transform.position.x - round(scene.camera.size.x / 2),
+                                     scene.camera.transform.position.y - round(scene.camera.size.y / 2))
+        cam_end: Vector2 = Vector2(cam_start.x + scene.camera.size.x, cam_start.y + scene.camera.size.y)
 
         camera_offset = scene.camera.transform.position - (scene.camera.size / 2)
-
-        def calc_point(obj: BaseObject, point: Point):
-            pc = point.copy()
-            obj.transform.rotation.rotate(pc.offset, obj.transform.rotation)
-            pc.offset += obj.transform.position
-            pc.offset -= camera_offset
-            RenderCore.points_without_culling.append(pc)
-
         objects_to_draw = [obj for obj in scene.objects if obj.visible]
 
         for obj in objects_to_draw:
             texture = obj.get_component(Texture)
             if texture:
                 for point in texture.get():
-                    calc_point(obj, point)
+                    pc = point.copy()
+                    obj.transform.rotation.rotate_offset(pc.offset, obj.transform.rotation)
+                    pc.offset += obj.transform.position
+                    pc.offset -= camera_offset
+                    RenderCore.points_without_culling.append(pc)
 
         for point in RenderCore.points_without_culling:
-            if in_region(region_start, region_end, point.offset):
+            if (cam_start.x < point.offset.x < cam_end.x) and (cam_start.y <= point.offset.y < cam_end.y):
                 RenderCore.points_with_culling.append(point)
 
         for point in RenderCore.points_with_culling:

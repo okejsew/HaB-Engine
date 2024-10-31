@@ -9,9 +9,8 @@ class Transform(BaseComponent):
         self.rotation: Rotation = Rotation.default
         self.moving_remainder: Vector2 = Vector2()
 
-    def translate(self, moving_factor: Vector2 | Vector2F):
-        moving_factor = Vector2F(self.moving_remainder.x + moving_factor.x,
-                                 self.moving_remainder.y + moving_factor.y)
-        int_vel = moving_factor.to_int()
-        self.moving_remainder = moving_factor - int_vel
+    def translate(self, delta: Vector2 | Vector2F):
+        delta = Vector2F(self.moving_remainder.x + delta.x, self.moving_remainder.y + delta.y)
+        int_vel = delta.to_int()
+        self.moving_remainder = delta - int_vel
         self.position += int_vel

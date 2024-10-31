@@ -13,6 +13,7 @@ class Point:
     def copy(self):
         return Point(self.sign, self.offset.copy())
 
+
 class Texture(BaseComponent):
     def __init__(self):
         super().__init__()

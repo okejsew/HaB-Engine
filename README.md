@@ -19,13 +19,6 @@ from src.engine import Engine
 Engine.current_scene = Scene()
 ```
 
-Можем включить debug mode, он будет показывать некоторые значение в левом верхнем углу экрана:
-```python
-from src.engine import Engine
-
-Engine.debug_mode = True
-```
-
 ## Создаём объект:
 ```python
 from src.base.object import BaseObject

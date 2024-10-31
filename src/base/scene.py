@@ -23,5 +23,3 @@ class Scene:
     def remove(self, obj: BaseObject):
         if obj in self.objects:
             self.objects.remove(obj)
-
-scene = Scene()

@@ -9,9 +9,7 @@ from src.core.render import RenderCore
 
 class Engine:
     current_scene: Optional[Scene] = None
-    threads: list[Thread] = []
     is_working: bool = False
-    debug_mode: bool = False
 
     @staticmethod
     def run():

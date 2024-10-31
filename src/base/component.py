@@ -6,7 +6,4 @@ if TYPE_CHECKING:
 
 class BaseComponent:
     def __init__(self):
-        self.owner: Optional['BaseObject'] = None
-
-    def __str__(self):
-        return f'Component[t={self.__class__.__name__}]'
+        self.owner: Optional[BaseObject] = None

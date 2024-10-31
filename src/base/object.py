@@ -13,7 +13,7 @@ class BaseObject:
     def __init__(self):
         self.name: str = 'BaseObject'
         self.visible: bool = True
-        self.components: list['BaseComponent'] = []
+        self.components: list[BaseComponent] = []
         self.transform: Transform = Transform()
         self.scene: Optional[Scene] = None
 
