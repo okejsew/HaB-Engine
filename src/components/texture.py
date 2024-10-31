@@ -1,5 +1,4 @@
 from src.base.component import BaseComponent
-from src.base.errors import TextureFileSyntaxIncorrect
 from src.utils.vector import Vector2
 
 
@@ -28,11 +27,7 @@ class Texture(BaseComponent):
         file = open(path, 'r', encoding='utf-8')
         for line in file.readlines():
             if not line.strip(): continue
-            try:
-                sign, pos = line.split(';')
-                x, y = pos.split(',')
-            except ValueError:
-                TextureFileSyntaxIncorrect(line)
-            else:
-                self.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
+            sign, pos = line.split(';')
+            x, y = pos.split(',')
+            self.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
         file.close()

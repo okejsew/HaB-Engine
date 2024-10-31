@@ -21,7 +21,7 @@ scene.add(obj)
 # Настраиваем и добавляем компоненты
 obj.add_component(Texture())
 
-obj.get_component(Texture).load('src/assets/textures/test.tx')
+obj.get_component(Texture).load('src/assets/test.tx')
 
 obj.add_component(Rigidbody())
 

@@ -1,6 +1,5 @@
 import time
 
-from src.base.errors import MissingCameraOnScene
 from src.base.scene import Scene
 from src.components.texture import Texture, Point
 from src.utils.console import window
@@ -17,8 +16,6 @@ class RenderCore:
 
     @staticmethod
     def render_objects(scene: Scene):
-        if scene.camera is None:
-            MissingCameraOnScene(scene)
 
         # Определение региона камеры (границ)
         region_start: Vector2 = Vector2(scene.camera.transform.position.x - round(scene.camera.size.x / 2),

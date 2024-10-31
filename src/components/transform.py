@@ -15,12 +15,3 @@ class Transform(BaseComponent):
         int_vel = moving_factor.to_int()
         self.moving_remainder = moving_factor - int_vel
         self.position += int_vel
-
-    def rotate(self, rotation: int):
-        match rotation:
-            case Rotation.down:
-                self.rotation.x, self.rotation.y = -self.rotation.x, -self.rotation.y
-            case Rotation.right:
-                self.rotation.x, self.rotation.y = -self.rotation.y, self.rotation.x
-            case Rotation.left:
-                self.rotation.x, self.rotation.y = self.rotation.y, -self.rotation.x
