@@ -30,6 +30,7 @@ class RenderCore:
 
         def calc_point(obj: BaseObject, point: Point):
             pc = point.copy()
+            obj.transform.rotation.rotate(pc.offset, obj.transform.rotation)
             pc.offset += obj.transform.position
             pc.offset -= camera_offset
             RenderCore.points_without_culling.append(pc)

@@ -3,7 +3,7 @@ from src.base.scene import Scene
 from src.components.rigidbody import Rigidbody
 from src.components.texture import TextureFabric
 from src.engine import Engine
-from src.utils.vector import Vector2
+from src.utils.vector import Vector2, Rotation
 
 # Создание сцены и настройка движка
 scene = Scene()
@@ -14,6 +14,7 @@ Engine.debug_mode = True
 
 obj = BaseObject()
 obj.transform.position = Vector2(50, 10)
+obj.transform.rotation = Rotation.down
 
 # Добавляем объект на сцену
 scene.add(obj)

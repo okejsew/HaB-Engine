@@ -1,3 +1,4 @@
+from enum import Enum
 from math import floor
 
 
@@ -98,20 +99,20 @@ def in_region(reg_start: Vector2, reg_end: Vector2, point: Vector2) -> bool:
     return (reg_start.x < point.x < reg_end.x) and (reg_start.y <= point.y < reg_end.y)
 
 
-class Rotation:
+class Rotation(Enum):
     default = 1
     down = 2
     left = 3
     right = 4
 
     @staticmethod
-    def to_right(vect: Vector2) -> Vector2:
-        return Vector2(-vect.y, vect.x)
-
-    @staticmethod
-    def to_left(vect: Vector2) -> Vector2:
-        return Vector2(vect.y, -vect.x)
-
-    @staticmethod
-    def to_down(vect: Vector2) -> Vector2:
-        return Vector2(-vect.x, -vect.y)
+    def rotate(offset: Vector2, rotation: 'Rotation'):
+        match rotation:
+            case Rotation.default:
+                offset.x, offset.y = offset.x, offset.y
+            case Rotation.left:
+                offset.x, offset.y = offset.y, -offset.x
+            case Rotation.right:
+                offset.x, offset.y = -offset.y, offset.x
+            case Rotation.down:
+                offset.x, offset.y = -offset.x, -offset.y
