@@ -59,16 +59,15 @@ pos = Vector2(5, 10) # Вектор2 типа int, потому что мы в �
 (Например от текстуры, и написать свою, которая будет менять от обстоятельств, например)
 
 ```python
-from src.components.texture import Texture
+from src.components.texture import Texture, TextureFabric
 from src.components.rigidbody import Rigidbody
 
 from src.base.object import BaseObject
 
 obj = BaseObject()
-obj.add_component(Texture())  # Текстура
+obj.add_component(TextureFabric.load('src/assets/test.tx'))
 obj.add_component(Rigidbody())  # Физика
 
 # Аналогично, можно их получать и использовать
-texture = obj.get_component(Texture)
-texture.load('src/assets/textures/test.tx')
+obj.get_component(Texture).points.clear()
 ```

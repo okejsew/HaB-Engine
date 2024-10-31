@@ -1,58 +1,64 @@
 import time
 
+from src.base.object import BaseObject
 from src.base.scene import Scene
 from src.components.texture import Texture, Point
 from src.utils.console import window
 from src.utils.vector import Vector2, in_region
 
 
-class RenderSettings:
-    camera_culling: bool = True
-    show_fps: bool = True
-
-
 class RenderCore:
     fps: float = time.time()
+    points_without_culling: list[Point] = []
+    points_with_culling: list[Point] = []
 
     @staticmethod
     def render_objects(scene: Scene):
+        for p in RenderCore.points_without_culling:
+            del p
+        for p in RenderCore.points_with_culling:
+            del p
+        RenderCore.points_without_culling.clear()
+        RenderCore.points_with_culling.clear()
 
-        # Определение региона камеры (границ)
         region_start: Vector2 = Vector2(scene.camera.transform.position.x - round(scene.camera.size.x / 2),
                                         scene.camera.transform.position.y - round(scene.camera.size.y / 2))
         region_end: Vector2 = Vector2(region_start.x + scene.camera.size.x,
                                       region_start.y + scene.camera.size.y)
 
-        # Смещение камеры для правильной отрисовки объектов
         camera_offset = scene.camera.transform.position - (scene.camera.size / 2)
 
-        visible_objects = [obj for obj in scene.objects if obj.visible]
-        points_without_culling: list[Point] = []
-        points_with_culling: list[Point] = []
+        def calc_point(obj: BaseObject, point: Point):
+            pc = point.copy()
+            pc.offset += obj.transform.position
+            pc.offset -= camera_offset
+            RenderCore.points_without_culling.append(pc)
 
-        # Объекты у которых есть компонент текстуры
-        for obj in visible_objects:
+        objects_to_draw = [obj for obj in scene.objects if obj.visible]
+
+        for obj in objects_to_draw:
             texture = obj.get_component(Texture)
             if texture:
-                points_without_culling += obj.get_component(Texture).get()
+                for point in texture.get():
+                    calc_point(obj, point)
 
-        # # Если включен параметр camera_culling, урезаем точки
-        if RenderSettings.camera_culling:
-            for point in points_without_culling:
-                if in_region(region_start, region_end, point.offset):
-                    points_with_culling.append(point)
-        else:
-            points_with_culling = points_without_culling.copy()
+        for point in RenderCore.points_without_culling:
+            if in_region(region_start, region_end, point.offset):
+                RenderCore.points_with_culling.append(point)
 
-        # Рисуем точки
-        for point in points_with_culling:
-            point_pos = point.offset - camera_offset
-            window.addch(point_pos.y, point_pos.x, point.sign)
+        for point in RenderCore.points_with_culling:
+            RenderCore.set_point(point.offset, point.sign)
 
     @staticmethod
-    def render_special():
-        if RenderSettings.show_fps:
-            window.addstr(window.getmaxyx()[0] - 1, 0, f'Кадров в секунду: ~{RenderCore.fps}')
+    def set_point(pos: Vector2, sign: str):
+        try:
+            window.addch(pos.y, pos.x, sign)
+        finally:
+            ...
+
+    @staticmethod
+    def render_fps():
+        window.addstr(window.getmaxyx()[0] - 1, 0, f'Кадров в секунду: ~{RenderCore.fps}')
 
     @staticmethod
     def calc_fps(start_time: float):
@@ -63,5 +69,5 @@ class RenderCore:
     def render(scene: Scene):
         window.clear()
         RenderCore.render_objects(scene)
-        RenderCore.render_special()
+        RenderCore.render_fps()
         window.refresh()

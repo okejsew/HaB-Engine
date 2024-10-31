@@ -1,6 +1,6 @@
 from typing import Optional
 
-from src.assets.camera import Camera
+from src.base.camera import Camera
 from src.base.object import BaseObject
 
 

@@ -1,7 +1,7 @@
 from src.base.object import BaseObject
 from src.base.scene import Scene
 from src.components.rigidbody import Rigidbody
-from src.components.texture import Texture
+from src.components.texture import TextureFabric
 from src.engine import Engine
 from src.utils.vector import Vector2
 
@@ -19,10 +19,7 @@ obj.transform.position = Vector2(50, 10)
 scene.add(obj)
 
 # Настраиваем и добавляем компоненты
-obj.add_component(Texture())
-
-obj.get_component(Texture).load('src/assets/test.tx')
-
+obj.add_component(TextureFabric.load('src/assets/test.tx'))
 obj.add_component(Rigidbody())
 
 # Запускаем движок

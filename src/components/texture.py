@@ -10,6 +10,8 @@ class Point:
     def __str__(self):
         return f'Point[pos={self.offset}, sign={self.sign}]'
 
+    def copy(self):
+        return Point(self.sign, self.offset.copy())
 
 class Texture(BaseComponent):
     def __init__(self):
@@ -17,17 +19,17 @@ class Texture(BaseComponent):
         self.points: list[Point] = []
 
     def get(self) -> list[Point]:
-        return self.convert_to_global(self.points)
+        return self.points
 
-    def convert_to_global(self, points: list[Point]) -> list[Point]:
-        return [Point(p.sign, p.offset + self.owner.transform.position) for p in points]
 
-    def load(self, path: str):
-        self.points.clear()
-        file = open(path, 'r', encoding='utf-8')
-        for line in file.readlines():
-            if not line.strip(): continue
-            sign, pos = line.split(';')
-            x, y = pos.split(',')
-            self.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
-        file.close()
+class TextureFabric:
+    @staticmethod
+    def load(path: str):
+        txt = Texture()
+        with open(path, 'r', encoding='utf-8') as file:
+            for line in file.readlines():
+                if not line.strip(): continue
+                sign, pos = line.split(';')
+                x, y = pos.split(',')
+                txt.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
+        return txt
