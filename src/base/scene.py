@@ -30,3 +30,5 @@ class Scene:
             self.objects.remove(obj)
         else:
             ObjectNotFound(obj, self)
+
+scene = Scene()

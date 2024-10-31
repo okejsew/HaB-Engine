@@ -99,7 +99,7 @@ def in_region(reg_start: Vector2, reg_end: Vector2, point: Vector2) -> bool:
 
 
 class Rotation:
-    up = 1
+    default = 1
     down = 2
     left = 3
     right = 4
@@ -114,4 +114,4 @@ class Rotation:
 
     @staticmethod
     def to_down(vect: Vector2) -> Vector2:
-        return Vector2(-vect.x, -vect.x)
+        return Vector2(-vect.x, -vect.y)

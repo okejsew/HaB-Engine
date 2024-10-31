@@ -1,12 +1,12 @@
 from src.base.component import BaseComponent
-from src.utils.vector import Vector2, Vector2F
+from src.utils.vector import Vector2, Vector2F, Rotation
 
 
 class Transform(BaseComponent):
     def __init__(self):
         super().__init__()
         self.position: Vector2 = Vector2()
-        self.rotation: Vector2 = R
+        self.rotation: int = Rotation.default
         self.moving_remainder: Vector2 = Vector2()
 
     def translate(self, moving_factor: Vector2 | Vector2F):
@@ -15,3 +15,12 @@ class Transform(BaseComponent):
         int_vel = moving_factor.to_int()
         self.moving_remainder = moving_factor - int_vel
         self.position += int_vel
+
+    def rotate(self, rotation: int):
+        match rotation:
+            case Rotation.down:
+                self.rotation.x, self.rotation.y = -self.rotation.x, -self.rotation.y
+            case Rotation.right:
+                self.rotation.x, self.rotation.y = -self.rotation.y, self.rotation.x
+            case Rotation.left:
+                self.rotation.x, self.rotation.y = self.rotation.y, -self.rotation.x
