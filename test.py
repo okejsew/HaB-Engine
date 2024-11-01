@@ -15,6 +15,7 @@ obj.transform.rotation = Rotation.down
 
 obj.add_component(TextureFabric.load('src/assets/test.tx'))
 obj.add_component(Rigidbody())
+obj.add_component(Rigidbody())
 
 scene.add(obj)
 Engine.run()

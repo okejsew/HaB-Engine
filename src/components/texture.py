@@ -1,4 +1,5 @@
 from src.base.component import BaseComponent
+from src.utils.error import Errors
 from src.utils.vector import Vector2
 
 
@@ -29,8 +30,13 @@ class TextureFabric:
         txt = Texture()
         with open(path, 'r', encoding='utf-8') as file:
             for line in file.readlines():
+                line = line.strip('\n')
                 if not line.strip(): continue
-                sign, pos = line.split(';')
-                x, y = pos.split(',')
-                txt.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
+                try:
+                    sign, pos = line.split(';')
+                    x, y = pos.split(',')
+                    txt.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
+                except ValueError:
+                    Errors.add(f'Error while parsing texure >>> {line} <<<')
+
         return txt

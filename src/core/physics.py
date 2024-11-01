@@ -1,6 +1,7 @@
 import time
 
 from src.components.rigidbody import Rigidbody
+from src.utils.error import Errors
 
 
 class PhisycsCore:
@@ -11,4 +12,5 @@ class PhisycsCore:
             for obj in Engine.current_scene.objects:
                 rigidbody = obj.get_component(Rigidbody)
                 if rigidbody: rigidbody.update()
+            Errors.update()
             time.sleep(0.016)

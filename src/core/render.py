@@ -1,3 +1,4 @@
+import curses
 import time
 
 from src.base.scene import Scene
@@ -10,6 +11,18 @@ class RenderCore:
     fps: float = time.time()
     points_without_culling: list[Point] = []
     points_with_culling: list[Point] = []
+
+    @staticmethod
+    def calc_fps(start_time: float):
+        t = time.perf_counter() - start_time
+        RenderCore.fps = round(1 / t, 2) if t > 0 else RenderCore.fps
+
+    @staticmethod
+    def set_point(pos: Vector2, sign: str):
+        try:
+            window.addch(pos.y, pos.x, sign)
+        finally:
+            ...
 
     @staticmethod
     def render_objects(scene: Scene):
@@ -43,24 +56,19 @@ class RenderCore:
             RenderCore.set_point(point.offset, point.sign)
 
     @staticmethod
-    def set_point(pos: Vector2, sign: str):
-        try:
-            window.addch(pos.y, pos.x, sign)
-        finally:
-            ...
-
-    @staticmethod
     def render_fps():
         window.addstr(window.getmaxyx()[0] - 1, 0, f'Кадров в секунду: ~{RenderCore.fps}')
 
     @staticmethod
-    def calc_fps(start_time: float):
-        t = time.perf_counter() - start_time
-        RenderCore.fps = round(1 / t, 2) if t > 0 else RenderCore.fps
+    def render_errors():
+        from src.utils.error import Errors
+        for i, error in enumerate(Errors.errors):
+            window.addstr(i, 0, error, curses.color_pair(2))
 
     @staticmethod
     def render(scene: Scene):
         window.clear()
         RenderCore.render_objects(scene)
         RenderCore.render_fps()
+        RenderCore.render_errors()
         window.refresh()

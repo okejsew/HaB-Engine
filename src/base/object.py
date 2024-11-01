@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, TypeVar, Type, Optional
 
 from src.components.transform import Transform
+from src.utils.error import Errors
 
 if TYPE_CHECKING:
     from src.base.component import BaseComponent
@@ -18,9 +19,12 @@ class BaseObject:
         self.scene: Optional[Scene] = None
 
     def add_component(self, component: 'BaseComponent'):
-        if component not in self.components:
-            self.components.append(component)
-            component.owner = self
+        for comp in self.components:
+            if type(component) is type(comp):
+                Errors.add(f'Warning: Component with type {type(component)} already added')
+                return
+        self.components.append(component)
+        component.owner = self
 
     def get_component(self, t: Type[T]) -> Optional[T]:
         for component in self.components:
