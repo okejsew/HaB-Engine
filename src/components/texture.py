@@ -1,5 +1,5 @@
 from src.base.component import BaseComponent
-from src.utils.error import Errors
+from src.utils.error import Debug
 from src.utils.vector import Vector2
 
 
@@ -37,6 +37,6 @@ class TextureFabric:
                     x, y = pos.split(',')
                     txt.points.append(Point(sign.strip(), Vector2(int(x), int(y))))
                 except ValueError:
-                    Errors.add(f'Error while parsing texure >>> {line} <<<')
+                    Debug.error(f'Error while parsing texure >>> {line} <<<')
 
         return txt

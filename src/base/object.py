@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, TypeVar, Type, Optional
 
 from src.components.transform import Transform
-from src.utils.error import Errors
+from src.utils.error import Debug
 
 if TYPE_CHECKING:
     from src.base.component import BaseComponent
@@ -21,7 +21,7 @@ class BaseObject:
     def add_component(self, component: 'BaseComponent'):
         for comp in self.components:
             if type(component) is type(comp):
-                Errors.add(f'Warning: Component with type {type(component)} already added')
+                Debug.warn(f'Component with type {type(component)} already added')
                 return
         self.components.append(component)
         component.owner = self

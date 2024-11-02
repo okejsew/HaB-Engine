@@ -1,4 +1,3 @@
-import curses
 import time
 
 from src.base.scene import Scene
@@ -61,9 +60,9 @@ class RenderCore:
 
     @staticmethod
     def render_errors():
-        from src.utils.error import Errors
-        for i, error in enumerate(Errors.errors):
-            window.addstr(i, 0, error, curses.color_pair(2))
+        from src.utils.error import Debug
+        for i, report in enumerate(Debug.stack):
+            window.addstr(i, 0, report.message, report.color)
 
     @staticmethod
     def render(scene: Scene):
