@@ -2,27 +2,24 @@ import time
 
 from src.base.scene import Scene
 from src.components.texture import Texture, Point
+from src.core import Core
 from src.utils.console import window, set_point
 from src.utils.error import Debug
 from src.utils.vector import Vector2
 
 
-class RenderCore:
+class Render(Core):
     def __init__(self, scene: Scene):
-        self.scene = scene
+        super().__init__(scene)
         self.fps: float = time.time()
-        self.points_without_culling: list[Point] = []
-        self.points_with_culling: list[Point] = []
+        self.points: list[Point] = []
 
     def calc_fps(self, start_time: float):
         t = time.perf_counter() - start_time
         self.fps = round(1 / t, 2) if t > 0 else self.fps
 
     def render_objects(self):
-        del self.points_without_culling[:]
-        del self.points_with_culling[:]
-        self.points_without_culling.clear()
-        self.points_with_culling.clear()
+        self.points = []
 
         cam_start: Vector2 = Vector2(self.scene.camera.transform.position.x - round(self.scene.camera.size.x / 2),
                                      self.scene.camera.transform.position.y - round(self.scene.camera.size.y / 2))
@@ -37,23 +34,21 @@ class RenderCore:
                 for point in texture.get():
                     pc = point.copy()
                     obj.transform.rotation.rotate_offset(pc.offset, obj.transform.rotation)
-                    pc.offset += obj.transform.position
-                    pc.offset -= camera_offset
-                    self.points_without_culling.append(pc)
+                    pc.offset += obj.transform.position - camera_offset
+                    self.points.append(pc)
 
-        for point in self.points_without_culling:
+        for point in self.points:
             if (cam_start.x < point.offset.x < cam_end.x) and (cam_start.y <= point.offset.y < cam_end.y):
-                self.points_with_culling.append(point)
-
-        for point in self.points_with_culling:
-            set_point(point.offset, point.sign)
+                set_point(point.offset, point.sign)
 
     def render_fps(self):
         window.addstr(window.getmaxyx()[0] - 1, 0, f'Кадров в секунду: ~{self.fps}')
 
     def update(self):
+        start_time = time.perf_counter()
         window.clear()
         self.render_objects()
         self.render_fps()
         Debug.render()
         window.refresh()
+        self.calc_fps(start_time)
