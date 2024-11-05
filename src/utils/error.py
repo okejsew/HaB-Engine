@@ -1,5 +1,7 @@
 import curses
 
+from src.utils.console import window
+
 
 class Report:
     def __init__(self, color: int, message: str):
@@ -22,6 +24,11 @@ class Debug:
     @staticmethod
     def error(message: str):
         Debug.stack.append(Report(curses.color_pair(2), message))
+
+    @staticmethod
+    def render():
+        for i, report in enumerate(Debug.stack):
+            window.addstr(i, 0, report.message, report.color)
 
     @staticmethod
     def update():

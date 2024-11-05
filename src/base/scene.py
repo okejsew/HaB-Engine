@@ -5,7 +5,8 @@ from src.base.object import BaseObject
 
 
 class Scene:
-    def __init__(self):
+    def __init__(self, name: str = 'Scene'):
+        self.name: str = name
         self.objects: list[BaseObject] = []
         self.camera: Optional[Camera] = Camera()
         self.objects.append(self.camera)
