@@ -12,5 +12,5 @@ class Transform(BaseComponent):
     def translate(self, delta: Vector2 | Vector2F):
         delta = Vector2F(self.moving_remainder.x + delta.x, self.moving_remainder.y + delta.y)
         int_vel = delta.to_int()
-        self.moving_remainder = delta - int_vel
+        self.moving_remainder += delta - int_vel
         self.position += int_vel
