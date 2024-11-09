@@ -3,7 +3,7 @@ import time
 from src.base.scene import Scene
 from src.components.rigidbody import Rigidbody
 from src.core import Core
-from src.utils.error import Debug
+from src.utils.debug import Debug
 
 
 class Physics(Core):

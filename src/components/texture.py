@@ -1,5 +1,5 @@
 from src.base.component import BaseComponent
-from src.utils.error import Debug
+from src.utils.debug import Debug
 from src.utils.vector import Vector2
 
 

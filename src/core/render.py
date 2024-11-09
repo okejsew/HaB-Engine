@@ -4,7 +4,7 @@ from src.base.scene import Scene
 from src.components.texture import Texture, Point
 from src.core import Core
 from src.utils.console import window, set_point
-from src.utils.error import Debug
+from src.utils.debug import Debug
 from src.utils.vector import Vector2
 
 

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, TypeVar, Type, Optional
 
 from src.components.transform import Transform
-from src.utils.error import Debug
+from src.utils.debug import Debug
 
 if TYPE_CHECKING:
     from src.base.component import BaseComponent
