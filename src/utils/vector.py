@@ -91,8 +91,6 @@ class Vector2F:
         return Vector2F(self.x, self.y)
 
 
-
-
 class Rotation(Enum):
     default = 1
     down = 2

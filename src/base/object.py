@@ -30,3 +30,10 @@ class BaseObject:
         for component in self.components:
             if isinstance(component, t):
                 return component
+
+    def get_components(self, t: Type[T]) -> list[Optional[T]]:
+        components = []
+        for component in self.components:
+            if isinstance(component, t):
+                components.append(component)
+        return components

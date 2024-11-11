@@ -5,6 +5,7 @@ from src.components.texture import Texture, Point
 from src.core import Core
 from src.utils.console import window, set_point
 from src.utils.debug import Debug
+from src.utils.time import Time
 from src.utils.vector import Vector2
 
 
@@ -14,9 +15,8 @@ class Render(Core):
         self.fps: float = time.time()
         self.points: list[Point] = []
 
-    def calc_fps(self, start_time: float):
-        t = time.perf_counter() - start_time
-        self.fps = round(1 / t, 2) if t > 0 else self.fps
+    def calc_fps(self, delta: float):
+        self.fps = round(1 / delta, 2) if delta > 0 else self.fps
 
     def render_objects(self):
         self.points = []
@@ -51,4 +51,5 @@ class Render(Core):
         self.render_fps()
         Debug.render()
         window.refresh()
-        self.calc_fps(start_time)
+        Time.delta = time.perf_counter() - start_time
+        self.calc_fps(Time.delta)
