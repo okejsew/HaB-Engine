@@ -92,10 +92,10 @@ class Vector2F:
 
 
 class Rotation(Enum):
-    default = 1
-    down = 2
-    left = 3
-    right = 4
+    default = Vector2(0, -1)
+    down = Vector2(0, 1)
+    left = Vector2(-1, 0)
+    right = Vector2(1, 0)
 
     @staticmethod
     def rotate_offset(offset: Vector2, rotation: 'Rotation'):

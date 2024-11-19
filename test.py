@@ -2,21 +2,22 @@ from src.base.object import BaseObject
 from src.components.script import Script
 from src.components.texture import TextureFabric
 from src.engine import Engine
-from src.utils.time import Time
-from src.utils.vector import Vector2, Rotation, Vector2F
+from src.utils.input import Input
+from src.utils.vector import Vector2, Rotation
 
 
 class CustomScript(Script):
     def __init__(self):
         super().__init__()
-        self.speed = 2
-        self.tick = 0
 
     def update(self):
-        self.owner.transform.translate(Vector2F(self.speed * Time.delta, 0))
-        self.tick += 1
-        if self.tick % 1500 == 0:
+        key = Input.get_key()
+        if key == ord('d'):
+            self.owner.transform.rotate_right()
+        elif key == ord('a'):
             self.owner.transform.rotate_left()
+        if key == ord('w'):
+            self.owner.transform.translate(self.owner.transform.rotation.value)
 
 
 engine = Engine()

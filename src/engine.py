@@ -1,5 +1,7 @@
+from typing import Optional
+
 from src.base.scene import Scene
-from src.core.physics import Physics
+from src.core.physic import Physic
 from src.core.render import Render
 from src.core.scripting import Scripting
 
@@ -9,9 +11,16 @@ class Engine:
         self.scene: Scene = Scene()
         self.is_working: bool = False
 
-        self.render: Render = Render(self.scene)
-        self.physic: Physics = Physics(self.scene)
-        self.scripting: Scripting = Scripting(self.scene)
+        self.render: Optional[Render] = None
+        self.physic: Optional[Physic] = None
+        self.scripting: Optional[Scripting] = None
+        
+        self.setup_core()
+
+    def setup_core(self):
+        self.render = Render(self.scene)
+        self.physic = Physic(self.scene)
+        self.scripting = Scripting(self.scene)
 
     def awake(self):
         self.is_working = True
@@ -23,6 +32,13 @@ class Engine:
         self.awake()
         self.physic.start_thread()
         self.thread()
+
+    def switch_scene(self, new: Scene):
+        self.end()
+        self.scene = new
+        self.setup_core()
+        self.run()
+
 
     def thread(self):
         while True:
