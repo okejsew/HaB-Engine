@@ -1,5 +1,5 @@
-from src.base.component import Component
-from src.base.utils.vector import Vector2F
+from engine.base.common.vector import Vector2F
+from engine.base.component import Component
 
 
 class Rigidbody(Component):

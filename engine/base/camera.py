@@ -1,5 +1,5 @@
-from src.base.object import Object
-from src.base.utils.vector import Vector2
+from engine.base.common.vector import Vector2
+from engine.base.object import Object
 
 
 class Camera(Object):

@@ -1,4 +1,4 @@
-from src.api import *
+from engine.api import *
 
 
 class CustomScript(Script):
@@ -22,7 +22,7 @@ obj = Object()
 obj.transform.position = Vector2(50, 10)
 obj.transform.rotation = Rotation.right
 
-obj.add_component(Texture.load('src/assets/test.tx'))
+obj.add_component(Texture.load('engine/assets/test.tx'))
 obj.add_component(Rigidbody())
 obj.add_component(CustomScript())
 

@@ -1,4 +1,4 @@
-from src.base.component import Component
+from engine.base.component import Component
 
 
 class Script(Component):

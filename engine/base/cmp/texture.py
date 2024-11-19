@@ -1,6 +1,6 @@
-from src.base.utils.point import Point, Pointed
-from src.base.utils.vector import Vector2
-from src.tools.debug import Debug
+from engine.base.common.point import Point, Pointed
+from engine.base.common.vector import Vector2
+from engine.tools.debug import Debug
 
 
 class TPoint(Point):

@@ -1,6 +1,6 @@
-from src.base.cmp.script import Script
-from src.base.scene import Scene
-from src.core import Core
+from engine.base.cmp.script import Script
+from engine.base.scene import Scene
+from engine.core import Core
 
 
 class Scripting(Core):

@@ -2,7 +2,7 @@ import curses
 
 import _curses
 
-from src.base.utils.vector import Vector2
+from engine.base.common.vector import Vector2
 
 window: _curses.window = curses.initscr()
 window.border(0)

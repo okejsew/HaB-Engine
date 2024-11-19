@@ -1,5 +1,5 @@
-from src.base.component import Component
-from src.base.utils.vector import Vector2, Vector2F, Rotation
+from engine.base.common.vector import Vector2, Vector2F, Rotation
+from engine.base.component import Component
 
 
 class Transform(Component):

@@ -1,5 +1,5 @@
-from src.base.utils.point import Point, Pointed
-from src.base.utils.vector import Vector2
+from engine.base.common.point import Point, Pointed
+from engine.base.common.vector import Vector2
 
 
 class CPoint(Point):

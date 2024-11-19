@@ -1,7 +1,7 @@
 from threading import Thread
 from typing import Optional
 
-from src.base.scene import Scene
+from engine.base.scene import Scene
 
 
 class Core:

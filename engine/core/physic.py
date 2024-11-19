@@ -1,9 +1,9 @@
 import time
 
-from src.base.cmp.rigidbody import Rigidbody
-from src.base.scene import Scene
-from src.core import Core
-from src.tools.debug import Debug
+from engine.base.cmp.rigidbody import Rigidbody
+from engine.base.scene import Scene
+from engine.core import Core
+from engine.tools.debug import Debug
 
 
 class Physic(Core):
