@@ -1,6 +1,6 @@
 import curses
 
-from src.utils.console import window
+from src.tools.console import window
 
 
 class Report:

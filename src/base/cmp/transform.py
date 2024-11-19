@@ -1,8 +1,8 @@
-from src.base.component import BaseComponent
-from src.utils.vector import Vector2, Vector2F, Rotation
+from src.base.component import Component
+from src.base.utils.vector import Vector2, Vector2F, Rotation
 
 
-class Transform(BaseComponent):
+class Transform(Component):
     def __init__(self):
         super().__init__()
         self.position: Vector2 = Vector2()

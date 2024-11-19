@@ -1,7 +1,7 @@
-from src.base.component import BaseComponent
+from src.base.component import Component
 
 
-class Script(BaseComponent):
+class Script(Component):
     def __init__(self):
         super().__init__()
 

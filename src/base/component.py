@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from src.base.object import BaseObject
+    from src.base.object import Object
 
 
-class BaseComponent:
+class Component:
     def __init__(self):
-        self.owner: Optional[BaseObject] = None
+        self.owner: Optional[Object] = None

@@ -1,19 +1,19 @@
 import time
 
+from src.base.cmp.texture import Texture, TPoint
 from src.base.scene import Scene
-from src.components.texture import Texture, Point
+from src.base.time import Time
+from src.base.utils.vector import Vector2
 from src.core import Core
-from src.utils.console import window, set_point
-from src.utils.debug import Debug
-from src.utils.time import Time
-from src.utils.vector import Vector2
+from src.tools.console import window, set_point
+from src.tools.debug import Debug
 
 
 class Render(Core):
     def __init__(self, scene: Scene):
         super().__init__(scene)
         self.fps: float = time.time()
-        self.points: list[Point] = []
+        self.points: list[TPoint] = []
 
     def calc_fps(self, delta: float):
         self.fps = round(1 / delta, 2) if delta > 0 else self.fps

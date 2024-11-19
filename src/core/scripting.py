@@ -1,5 +1,5 @@
+from src.base.cmp.script import Script
 from src.base.scene import Scene
-from src.components.script import Script
 from src.core import Core
 
 

@@ -1,8 +1,8 @@
-from src.base.object import BaseObject
-from src.utils.vector import Vector2
+from src.base.object import Object
+from src.base.utils.vector import Vector2
 
 
-class Camera(BaseObject):
+class Camera(Object):
     def __init__(self):
         super().__init__()
         self.size: Vector2 = Vector2(120, 30)

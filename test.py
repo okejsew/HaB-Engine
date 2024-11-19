@@ -1,9 +1,4 @@
-from src.base.object import BaseObject
-from src.components.script import Script
-from src.components.texture import TextureFabric
-from src.engine import Engine
-from src.utils.input import Input
-from src.utils.vector import Vector2, Rotation
+from src.api import *
 
 
 class CustomScript(Script):
@@ -23,12 +18,12 @@ class CustomScript(Script):
 engine = Engine()
 scene = engine.scene
 
-obj = BaseObject()
+obj = Object()
 obj.transform.position = Vector2(50, 10)
 obj.transform.rotation = Rotation.right
 
-obj.add_component(TextureFabric.load('src/assets/test.tx'))
-# obj.add_component(Rigidbody())
+obj.add_component(Texture.load('src/assets/test.tx'))
+obj.add_component(Rigidbody())
 obj.add_component(CustomScript())
 
 scene.add(obj)

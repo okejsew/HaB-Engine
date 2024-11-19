@@ -1,24 +1,24 @@
 from typing import TYPE_CHECKING, TypeVar, Type, Optional
 
-from src.components.transform import Transform
-from src.utils.debug import Debug
+from src.base.cmp.transform import Transform
+from src.tools.debug import Debug
 
 if TYPE_CHECKING:
-    from src.base.component import BaseComponent
+    from src.base.component import Component
     from src.base.scene import Scene
 
 T = TypeVar('T')
 
 
-class BaseObject:
+class Object:
     def __init__(self):
         self.name: str = 'BaseObject'
         self.visible: bool = True
-        self.components: list[BaseComponent] = []
+        self.components: list[Component] = []
         self.transform: Transform = Transform()
         self.scene: Optional[Scene] = None
 
-    def add_component(self, component: 'BaseComponent'):
+    def add_component(self, component: 'Component'):
         for comp in self.components:
             if type(component) is type(comp):
                 Debug.warn(f'Component with type {type(component)} already added')
