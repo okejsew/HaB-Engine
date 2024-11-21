@@ -2,6 +2,7 @@ from threading import Thread
 from typing import Optional
 
 from engine.base.scene import Scene
+from engine.tools.debug import Debug
 
 
 class Core:
@@ -11,6 +12,8 @@ class Core:
         self.is_working: bool = False
 
     def start_thread(self):
+        Debug.warn(f'Запуск потока для "{self.__class__.__name__}"')
+
         def thrd():
             while self.is_working:
                 self.update()
@@ -23,6 +26,7 @@ class Core:
         self.is_working = True
 
     def end(self):
+        Debug.warn(f'Завершение потока для "{self.__class__.__name__}"')
         self.is_working = False
         if self.thread:
             self.thread.join()

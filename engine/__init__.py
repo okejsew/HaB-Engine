@@ -4,6 +4,7 @@ from .base.scene import Scene
 from .core.physic import Physic
 from .core.render import Render
 from .core.scripting import Scripting
+from .tools.debug import Debug
 
 
 class Engine:
@@ -14,15 +15,17 @@ class Engine:
         self.render: Optional[Render] = None
         self.physic: Optional[Physic] = None
         self.scripting: Optional[Scripting] = None
-        
+
         self.setup_core()
 
     def setup_core(self):
         self.render = Render(self.scene)
         self.physic = Physic(self.scene)
         self.scripting = Scripting(self.scene)
+        Debug.info('Движок готов к работе')
 
     def awake(self):
+        Debug.info('Запуск движка...')
         self.is_working = True
         self.render.awake()
         self.physic.awake()
@@ -38,7 +41,6 @@ class Engine:
         self.scene = new
         self.setup_core()
         self.run()
-
 
     def thread(self):
         while True:

@@ -16,16 +16,6 @@ class CustomScript(Script):
         if key == ord('s'):
             self.owner.transform.position.y += 1
 
-        if key == ord('e'):
-            self.owner.size.x += 1
-        elif key == ord('q'):
-            self.owner.size.x -= 1
-        if key == ord('r'):
-            self.owner.size.y += 1
-        if key == ord('f'):
-            self.owner.size.y -= 1
-
-
 engine = Engine()
 scene = engine.scene
 
@@ -35,7 +25,7 @@ obj.transform.rotation = Rotation.right
 
 obj.add_component(Texture.load('engine/assets/test.tx'))
 # obj.add_component(Rigidbody())
-scene.camera.add_component(CustomScript())
+obj.add_component(CustomScript())
 
 scene.add(obj)
 engine.run()

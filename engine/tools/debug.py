@@ -9,8 +9,10 @@ class Report:
         self.message = message
 
 
+max_y, _ = window.getmaxyx()
 class Debug:
     stack: list[Report] = []
+    log_stack: dict[str, str] = {}
     tick: int = 0
 
     @staticmethod
@@ -26,14 +28,20 @@ class Debug:
         Debug.stack.append(Report(curses.color_pair(2), message))
 
     @staticmethod
+    def log(sender, message):
+        Debug.log_stack[sender] = message
+
+    @staticmethod
     def render():
-        for i, report in enumerate(Debug.stack[:5]):
-            window.addstr(i, 0, report.message, report.color)
+        for i, report in enumerate(Debug.stack[:10]):
+            window.addstr(i + 1, 1, report.message, report.color)
+        for i, (sender, message) in enumerate(Debug.log_stack.items()):
+            window.addstr(max_y - i - 2, 1, message)
 
     @staticmethod
     def update():
         Debug.tick += 1
-        if Debug.tick == 300:
+        if Debug.tick == 150:
             if Debug.stack:
                 Debug.stack.pop(0)
             Debug.tick = 0

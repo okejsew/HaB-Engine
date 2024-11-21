@@ -38,4 +38,5 @@ class Texture(Pointed):
                 else:
                     sign, x, y = match.groups()
                     texture.points.append(TPoint(sign, Vector2(int(x), int(y))))
+        Debug.warn(f'Загружена текстура из файла "{path}"')
         return texture

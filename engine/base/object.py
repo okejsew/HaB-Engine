@@ -17,16 +17,12 @@ class Object:
         self.components: list[Component] = []
         self.transform: Transform = Transform()
         self.scene: Optional[Scene] = None
-
-    def is_component(self, t: Type[T]) -> bool:
-        for component in self.components:
-            if isinstance(component, t):
-                return True
+        Debug.warn(f'Создан новый объект {self}')
 
     def add_component(self, component: 'Component'):
         for comp in self.components:
             if type(component) is type(comp):
-                Debug.warn(f'Component with type {type(component)} already added')
+                Debug.warn(f'Компонент типа {type(component)} уже добавлен')
                 return
         self.components.append(component)
         component.owner = self
