@@ -8,13 +8,22 @@ class CustomScript(Script):
     def update(self):
         key = Input.get_key()
         if key == ord('d'):
-            self.owner.transform.rotate_right()
+            self.owner.transform.position.x += 1
         elif key == ord('a'):
-            self.owner.transform.rotate_left()
+            self.owner.transform.position.x -= 1
         if key == ord('w'):
-            self.owner.transform.translate(self.owner.transform.rotation.value)
-        if key == ord(' '):
-            self.owner.add_component(Rigidbody())
+            self.owner.transform.position.y -= 1
+        if key == ord('s'):
+            self.owner.transform.position.y += 1
+
+        if key == ord('e'):
+            self.owner.size.x += 1
+        elif key == ord('q'):
+            self.owner.size.x -= 1
+        if key == ord('r'):
+            self.owner.size.y += 1
+        if key == ord('f'):
+            self.owner.size.y -= 1
 
 
 engine = Engine()
@@ -26,7 +35,7 @@ obj.transform.rotation = Rotation.right
 
 obj.add_component(Texture.load('engine/assets/test.tx'))
 # obj.add_component(Rigidbody())
-obj.add_component(CustomScript())
+scene.camera.add_component(CustomScript())
 
 scene.add(obj)
 engine.run()

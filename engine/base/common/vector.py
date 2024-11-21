@@ -39,7 +39,7 @@ class Vector2:
         return Vector2(self.x, self.y)
 
     def __str__(self):
-        return f'V2({self.y}, {self.x})'
+        return f'({self.y}, {self.x})'
 
 
 class Vector2F:

@@ -27,7 +27,7 @@ class Debug:
 
     @staticmethod
     def render():
-        for i, report in enumerate(Debug.stack):
+        for i, report in enumerate(Debug.stack[:5]):
             window.addstr(i, 0, report.message, report.color)
 
     @staticmethod
