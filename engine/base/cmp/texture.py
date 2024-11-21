@@ -1,6 +1,10 @@
+import re
+
 from engine.base.common.point import Point, Pointed
 from engine.base.common.vector import Vector2
 from engine.tools.debug import Debug
+
+pattern = re.compile(r'^\s*(\S+)\s*;\s*(-?\d+)\s*,\s*(-?\d+)\s*$')
 
 
 class TPoint(Point):
@@ -22,15 +26,16 @@ class Texture(Pointed):
 
     @staticmethod
     def load(path: str):
-        txt = Texture()
+        texture = Texture()
+
         with open(path, 'r', encoding='utf-8') as file:
             for line in file.readlines():
-                line = line.strip('\n')
-                if not line.strip(): continue
-                try:
-                    sign, pos = line.split(';')
-                    x, y = pos.split(',')
-                    txt.points.append(TPoint(sign.strip(), Vector2(int(x), int(y))))
-                except ValueError:
-                    Debug.error(f'Error while parsing texure >>> {line} <<<')
-        return txt
+                line = line.strip()
+                if not line: continue
+                match = pattern.match(line)
+                if not match:
+                    Debug.error(f'Texture file syntax error >>> {line} <<<')
+                else:
+                    sign, x, y = match.groups()
+                    texture.points.append(TPoint(sign, Vector2(int(x), int(y))))
+        return texture
