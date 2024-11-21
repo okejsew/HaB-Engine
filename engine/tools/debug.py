@@ -11,7 +11,7 @@ class Report:
 
 class Debug:
     stack: list[Report] = []
-    updates: int = 0
+    tick: int = 0
 
     @staticmethod
     def info(message: str):
@@ -32,8 +32,8 @@ class Debug:
 
     @staticmethod
     def update():
-        Debug.updates += 1
-        if Debug.updates == 300:
+        Debug.tick += 1
+        if Debug.tick == 300:
             if Debug.stack:
                 Debug.stack.pop(0)
-            Debug.updates = 0
+            Debug.tick = 0

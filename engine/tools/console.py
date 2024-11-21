@@ -21,8 +21,8 @@ curses.init_pair(4, curses.COLOR_GREEN, curses.COLOR_BLACK)
 def set_point(pos: Vector2, sign: str):
     try:
         window.addch(pos.y, pos.x, sign)
-    finally:
-        ...
+    except Exception as ex:
+        print(ex)
 
 
 def color(num: int):

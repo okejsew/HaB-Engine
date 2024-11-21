@@ -15,6 +15,10 @@ class TPoint(Point):
 class Texture(Pointed):
     def __init__(self):
         super().__init__()
+        self.points: list[TPoint] = []
+
+    def get(self) -> list[TPoint]:
+        return self.points
 
     @staticmethod
     def load(path: str):

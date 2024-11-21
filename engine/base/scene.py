@@ -9,7 +9,7 @@ class Scene:
         self.name: str = name
         self.objects: list[Object] = []
         self.camera: Optional[Camera] = Camera()
-        self.objects.append(self.camera)
+        self.add(self.camera)
 
     def add(self, obj: Object):
         if obj not in self.objects:

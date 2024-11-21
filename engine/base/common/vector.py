@@ -38,6 +38,9 @@ class Vector2:
     def copy(self):
         return Vector2(self.x, self.y)
 
+    def __str__(self):
+        return f'V2({self.y}, {self.x})'
+
 
 class Vector2F:
     def __init__(self, x: float = 0, y: float = 0):
@@ -98,7 +101,7 @@ class Rotation(Enum):
     right = Vector2(1, 0)
 
     @staticmethod
-    def rotate_offset(offset: Vector2, rotation: 'Rotation'):
+    def apply_rotation(offset: Vector2, rotation: 'Rotation'):
         match rotation:
             case Rotation.default:
                 offset.x, offset.y = offset.x, offset.y

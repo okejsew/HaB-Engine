@@ -13,6 +13,8 @@ class CustomScript(Script):
             self.owner.transform.rotate_left()
         if key == ord('w'):
             self.owner.transform.translate(self.owner.transform.rotation.value)
+        if key == ord(' '):
+            self.owner.add_component(Rigidbody())
 
 
 engine = Engine()
@@ -23,7 +25,7 @@ obj.transform.position = Vector2(50, 10)
 obj.transform.rotation = Rotation.right
 
 obj.add_component(Texture.load('engine/assets/test.tx'))
-obj.add_component(Rigidbody())
+# obj.add_component(Rigidbody())
 obj.add_component(CustomScript())
 
 scene.add(obj)

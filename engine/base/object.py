@@ -18,6 +18,11 @@ class Object:
         self.transform: Transform = Transform()
         self.scene: Optional[Scene] = None
 
+    def is_component(self, t: Type[T]) -> bool:
+        for component in self.components:
+            if isinstance(component, t):
+                return True
+
     def add_component(self, component: 'Component'):
         for comp in self.components:
             if type(component) is type(comp):
