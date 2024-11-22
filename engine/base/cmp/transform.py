@@ -1,3 +1,4 @@
+from engine.base.cmp.collider import Collider
 from engine.base.common.vector import Vector2, Vector2F, Rotation
 from engine.base.component import Component
 from engine.tools.debug import Debug
@@ -12,6 +13,11 @@ class Transform(Component):
 
     def translate(self, delta: Vector2 | Vector2F):
         try:
+            collider = self.owner.get_component(Collider)
+            if collider:
+                x, y = delta.x / abs(delta.x) if delta.x != 0 else 0, delta.y / abs(delta.y) if delta.y != 0 else 0
+                if collider.check_direction(Vector2(x, y)):
+                    return
             delta = Vector2F(self.moving_remainder.x + delta.x, self.moving_remainder.y + delta.y)
             int_vel = delta.to_int()
             self.moving_remainder = delta - int_vel

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from engine.api import *
 from engine.base.cmp.collider import Collider
 from engine.base.cmp.colliders.texture import TextureCollider
@@ -8,6 +10,10 @@ from engine.tools.debug import Debug
 class CustomScript(Script):
     def __init__(self):
         super().__init__()
+        self.collider: Optional[Collider] = None
+
+    def awake(self):
+        self.collider = self.owner.get_component(Collider)
 
     def update(self):
         key = Input.get_key()
@@ -16,7 +22,8 @@ class CustomScript(Script):
         elif key == ord('a'):
             self.owner.transform.translateX(-1)
         if key == ord('w'):
-            self.owner.get_component(Rigidbody).add_force(Vector2F(0, -100))
+            if self.collider.check_direction(Vector2(0, 1)):
+                self.owner.get_component(Rigidbody).add_force(Vector2F(0, -50))
         if key == ord('s'):
             self.owner.transform.translateY(1)
         if key == ord(' '):

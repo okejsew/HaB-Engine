@@ -1,11 +1,9 @@
-import curses
-
 from engine.tools.console import window
 
 
 class Report:
-    def __init__(self, color: int, message: str):
-        self.color = color
+    def __init__(self, _type: str, message: str):
+        self.type = _type
         self.message = message
 
 
@@ -17,15 +15,15 @@ class Debug:
 
     @staticmethod
     def info(message: str):
-        Debug.stack.append(Report(curses.color_pair(4), message))
+        Debug.stack.append(Report('INFO', message))
 
     @staticmethod
     def warn(message: str):
-        Debug.stack.append(Report(curses.color_pair(3), message))
+        Debug.stack.append(Report('!WARN!', message))
 
     @staticmethod
     def error(message: str):
-        Debug.stack.append(Report(curses.color_pair(2), message))
+        Debug.stack.append(Report('!ERROR!', message))
 
     @staticmethod
     def log(sender, message):
@@ -34,14 +32,14 @@ class Debug:
     @staticmethod
     def render():
         for i, report in enumerate(Debug.stack[:10]):
-            window.addstr(i + 1, 1, report.message, report.color)
+            window.addstr(i + 1, 1, f'[{report.type}] {report.message}')
         for i, (sender, message) in enumerate(Debug.log_stack.items()):
             window.addstr(max_y - i - 2, 1, message)
 
     @staticmethod
     def update():
         Debug.tick += 1
-        if Debug.tick == 150:
+        if Debug.tick == 100:
             if Debug.stack:
                 Debug.stack.pop(0)
             Debug.tick = 0
