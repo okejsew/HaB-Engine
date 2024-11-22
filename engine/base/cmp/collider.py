@@ -20,7 +20,7 @@ class Collider(Pointed):
         super().__init__()
         self.points.append(Point(Vector2(0, 0)))
         self.collisions: list[Collision] = []
-        self._object_: Optional[Object] = None
+        self.__object: Optional[Object] = None
 
     def add_collision(self, obj: 'Object', point: Point, direction: Vector2):
         self.collisions.append(Collision(obj, point, direction))
@@ -33,13 +33,9 @@ class Collider(Pointed):
 
     def calculate(self):
         self.collisions.clear()
-        objects = self.owner.scene.objects.copy()
-        try:
-            objects.remove(self.owner)
-        except ValueError:
-            pass
-        for obj in objects:
-            self._object_ = obj
+        for obj in self.owner.scene.objects:
+            if obj is self.owner: continue
+            self.__object = obj
             collider = obj.get_component(Collider)
             if not collider: continue
             for point1 in self.get():
@@ -50,7 +46,7 @@ class Collider(Pointed):
         def _check(direction: Vector2):
             try:
                 if point1.offset + direction == point2.offset:
-                    self.add_collision(self._object_, point1, direction)
+                    self.add_collision(self.__object, point1, direction)
             except Exception as ex:
                 Debug.error(str(ex))
 

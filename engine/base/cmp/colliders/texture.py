@@ -13,4 +13,4 @@ class TextureCollider(Collider):
         if texture:
             return texture.get()
         else:
-            Debug.error('Ошибка получения колайдера по текстуре, возможно у вас нет текстуры?')
+            Debug.error('У объекта нет текстуры, коллайдер не может работать')

@@ -1,4 +1,5 @@
-from engine.base.common.vector import Vector2F
+from engine.base.cmp.collider import Collider
+from engine.base.common.vector import Vector2F, Vector2
 from engine.base.component import Component
 
 
@@ -19,7 +20,11 @@ class Rigidbody(Component):
 
     def update(self, delta_time: float = 0.05):
         if self.is_gravity:
-            self.add_force(Vector2F(0, self.gravity * self.mass))
+            collider = self.owner.get_component(Collider)
+            if collider and collider.check_direction(Vector2(0, 1)):
+                self.velocity.y = 0
+            else:
+                self.add_force(Vector2F(0, self.gravity * self.mass))
 
         self.acceleration = self.force / self.mass
         self.velocity += self.acceleration * delta_time

@@ -34,7 +34,7 @@ obj.transform.rotation = Rotation.down
 obj2 = Object()
 obj2.transform.position = Vector2(50, 20)
 
-obj.add_component(Texture.load('engine/assets/ground.tx'))
+obj.add_component(Texture.load('engine/assets/test.tx'))
 obj.add_component(TextureCollider())
 obj.add_component(Rigidbody())
 obj.add_component(CustomScript())
