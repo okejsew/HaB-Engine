@@ -1,6 +1,5 @@
-from engine.base.cmp.texture import TPoint
 from engine.base.common.point import Point
-from engine.base.common.vector import Vector2, Rotation
+from engine.base.common.vector import Vector2
 from engine.base.object import Object
 
 
@@ -20,12 +19,6 @@ class Camera(Object):
         start = self.transform.position - self.size / 2
         end = start + self.size
         return start, end
-
-    def true_point(self, p: Point, obj: Object) -> TPoint:  # noqa
-        point = p.copy()
-        Rotation.apply_rotation(point.offset, obj.transform.rotation)
-        point.offset += obj.transform.position
-        return point
 
     def in_region(self, p: Point) -> bool:
         cam_start, cam_end = self.region

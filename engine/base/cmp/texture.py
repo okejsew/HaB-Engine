@@ -1,7 +1,7 @@
 import re
 
 from engine.base.common.point import Point, Pointed
-from engine.base.common.vector import Vector2
+from engine.base.common.vector import Vector2, Rotation
 from engine.tools.debug import Debug
 
 pattern = re.compile(r'^\s*(\S+)\s*;\s*(-?\d+)\s*,\s*(-?\d+)\s*$')
@@ -22,7 +22,13 @@ class Texture(Pointed):
         self.points: list[TPoint] = []
 
     def get(self) -> list[TPoint]:
-        return self.points
+        return [self.true_point(point) for point in self.points]
+
+    def true_point(self, point: TPoint):
+        point_copy = point.copy()
+        Rotation.apply_rotation(point_copy.offset, self.owner.transform.rotation)
+        point_copy.offset += self.owner.transform.position
+        return point_copy
 
     @staticmethod
     def load(path: str):

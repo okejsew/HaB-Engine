@@ -24,8 +24,7 @@ class Render(Core):
         for obj in objects_to_draw:
             texture = obj.get_component(Texture)
             if not texture: continue
-            for raw_point in texture.get():
-                point = self.scene.camera.true_point(raw_point, obj)
+            for point in texture.get():
                 if self.scene.camera.in_region(point):
                     set_point(point.offset - self.scene.camera.region[0], point.sign)
 

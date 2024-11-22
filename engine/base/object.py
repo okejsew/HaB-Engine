@@ -16,6 +16,7 @@ class Object:
         self.visible: bool = True
         self.components: list[Component] = []
         self.transform: Transform = Transform()
+        self.transform.owner = self
         self.scene: Optional[Scene] = None
         Debug.warn(f'Создан новый объект {self}')
 

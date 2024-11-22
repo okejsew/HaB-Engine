@@ -41,6 +41,9 @@ class Vector2:
     def __str__(self):
         return f'({self.y}, {self.x})'
 
+    def __abs__(self):
+        return Vector2(abs(self.x), abs(self.y))
+
 
 class Vector2F:
     def __init__(self, x: float = 0, y: float = 0):
@@ -71,6 +74,9 @@ class Vector2F:
         self.x -= other.x
         self.y -= other.y
         return self
+
+    def __abs__(self):
+        return Vector2F(abs(self.x), abs(self.y))
 
     def __mul__(self, scalar: float):
         return Vector2F(self.x * scalar, self.y * scalar)
