@@ -8,6 +8,8 @@ class Report:
 
 
 max_y, _ = window.getmaxyx()
+
+
 class Debug:
     stack: list[Report] = []
     log_stack: dict[str, str] = {}
@@ -23,7 +25,7 @@ class Debug:
 
     @staticmethod
     def error(message: str):
-        Debug.stack.append(Report('!ERROR!', message))
+        Debug.stack.append(Report('==!ERROR!==', message))
 
     @staticmethod
     def log(sender, message):
@@ -39,7 +41,6 @@ class Debug:
     @staticmethod
     def update():
         Debug.tick += 1
-        if Debug.tick == 100:
-            if Debug.stack:
-                Debug.stack.pop(0)
+        if Debug.tick == 2000:
             Debug.tick = 0
+            Debug.stack.pop(-1)

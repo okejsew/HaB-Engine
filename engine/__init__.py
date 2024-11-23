@@ -1,53 +1,44 @@
-from typing import Optional
-
 from .base.scene import Scene
+from .core.debug import DebugRenderer
 from .core.physic import Physic
-from .core.render import Render
-from .core.scripting import Scripting
+from .core.renderer import ObjectRenderer
+from .core.scripter import Scripter
+from .tools.console import window
 from .tools.debug import Debug
+from .tools.render import Renderer
 
 
 class Engine:
-    def __init__(self):
-        self.scene: Scene = Scene()
-        self.is_working: bool = False
+    scene: Scene = Scene()
+    is_working: bool = False
 
-        self.render: Optional[Render] = None
-        self.physic: Optional[Physic] = None
-        self.scripting: Optional[Scripting] = None
+    @staticmethod
+    def setup():
+        Debug.info('Настройка движка...')
+        ObjectRenderer.setup(Engine.scene)
+        Scripter.setup(Engine.scene)
+        Physic.setup(Engine.scene)
+        DebugRenderer.setup()
 
-        self.setup_core()
-
-    def setup_core(self):
-        self.render = Render(self.scene)
-        self.physic = Physic(self.scene)
-        self.scripting = Scripting(self.scene)
-        Debug.info('Движок готов к работе')
-
-    def awake(self):
+    @staticmethod
+    def run():
         Debug.info('Запуск движка...')
-        self.is_working = True
-        self.render.awake()
-        self.physic.awake()
-        self.scripting.awake()
+        Engine.is_working = True
+        Engine.setup()
+        Engine.thread()
 
-    def run(self):
-        self.awake()
-        self.physic.start_thread()
-        self.thread()
+    @staticmethod
+    def thread():
+        while Engine.is_working:
+            Renderer.update()
+            Scripter.update()
+            DebugRenderer.update()
 
-    def switch_scene(self, new: Scene):
-        self.end()
-        self.scene = new
-        self.setup_core()
-        self.run()
+    @staticmethod
+    def switch_scene(new: Scene):
+        Debug.warn('Смена сцены...')
+        Engine.scene = new
 
-    def thread(self):
-        while True:
-            self.render.update()
-            self.scripting.update()
-
-    def end(self):
-        self.render.end()
-        self.physic.end()
-        self.scripting.end()
+    @staticmethod
+    def end():
+        pass

@@ -1,18 +1,34 @@
 import time
+from threading import Thread
+from typing import Optional
 
 from engine.base.cmp.rigidbody import Rigidbody
 from engine.base.scene import Scene
-from engine.core import Core
-from engine.tools.debug import Debug
 
 
-class Physic(Core):
-    def __init__(self, scene: Scene):
-        super().__init__(scene)
+class Physic:
+    scene: Optional[Scene] = None
+    thread: Optional[Thread] = None
 
-    def update(self):
-        for obj in self.scene.objects:
+    @staticmethod
+    def setup(scene: Scene):
+        Physic.scene = scene
+        Physic.start_thread()
+
+    @staticmethod
+    def start_thread():
+        from engine import Engine
+
+        def _thread():
+            while Engine.is_working:
+                Physic.update()
+
+        Physic.thread = Thread(target=_thread)
+        Physic.thread.start()
+
+    @staticmethod
+    def update():
+        for obj in Physic.scene.objects:
             rigidbody = obj.get_component(Rigidbody)
             if rigidbody: rigidbody.update()
-        Debug.update()
         time.sleep(0.016)

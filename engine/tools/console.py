@@ -21,7 +21,8 @@ curses.init_pair(4, curses.COLOR_GREEN, curses.COLOR_BLACK)
 
 def set_point(pos: Vector2, sign: str):
     max_y, max_x = window.getmaxyx()
-    if (0 <= pos.x < max_x and 0 <= pos.y < max_y) and not (pos.y == max_y - 1 and pos.x == max_x - 1):
+    if ((0 <= pos.x < max_x and 0 <= pos.y < max_y) and
+            not (pos.y == max_y - 1 and pos.x == max_x - 1)):
         window.addch(pos.y, pos.x, sign[0])
 
 
