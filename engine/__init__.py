@@ -10,6 +10,7 @@ from .tools.render import Renderer
 
 class Engine:
     scene: Scene = Scene()
+    debug_mode: bool = False
     is_working: bool = False
 
     @staticmethod
@@ -18,7 +19,8 @@ class Engine:
         ObjectRenderer.setup(Engine.scene)
         Scripter.setup(Engine.scene)
         Physic.setup(Engine.scene)
-        DebugRenderer.setup()
+        if Engine.debug_mode:
+            DebugRenderer.setup()
 
     @staticmethod
     def run():
