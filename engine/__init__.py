@@ -1,3 +1,4 @@
+from .base.object import Object
 from .base.scene import Scene
 from .core.debug import DebugRenderer
 from .core.physic import Physic
@@ -12,6 +13,9 @@ class Engine:
     scene: Scene = Scene()
     debug_mode: bool = False
     is_working: bool = False
+
+    def add_object(self, obj: Object):
+        self.scene.add(obj)
 
     @staticmethod
     def setup():
@@ -31,6 +35,7 @@ class Engine:
 
     @staticmethod
     def thread():
+        Physic.start_thread()
         while Engine.is_working:
             Renderer.update()
             Scripter.update()
@@ -40,7 +45,13 @@ class Engine:
     def switch_scene(new: Scene):
         Debug.warn('Смена сцены...')
         Engine.scene = new
+        Engine.setup()
+
+    @staticmethod
+    def set_scene(new: Scene):
+        Engine.scene = new
 
     @staticmethod
     def end():
-        pass
+        Engine.is_working = False
+        Physic.thread.join()

@@ -13,7 +13,6 @@ class Physic:
     @staticmethod
     def setup(scene: Scene):
         Physic.scene = scene
-        Physic.start_thread()
 
     @staticmethod
     def start_thread():
