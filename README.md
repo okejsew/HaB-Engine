@@ -66,6 +66,5 @@ Engine.run()
 ## Требования
 
 - Python 3.10+
-- `curses` (встроен в стандартную библиотеку Python для Linux/MacOS; для Windows потребуется дополнительная установка,
-  например, через [UniCurses](https://pypi.org/project/UniCurses/)).
+- `curses` (встроен в стандартную библиотеку Python для Linux/MacOS)
 - `windows-curses` если вы на Windows
