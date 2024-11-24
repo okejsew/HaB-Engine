@@ -12,13 +12,12 @@ T = TypeVar('T')
 
 class Object:
     def __init__(self):
-        self.name: str = 'BaseObject'
-        self.visible: bool = True
+        self.name = 'BaseObject'
+        self.visible = True
         self.components: list[Component] = []
-        self.transform: Transform = Transform()
+        self.transform = Transform()
         self.transform.owner = self
         self.scene: Optional[Scene] = None
-        Debug.warn(f'Создан новый объект {self}')
 
     def add_component(self, component: 'Component'):
         for comp in self.components:

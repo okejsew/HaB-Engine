@@ -10,9 +10,9 @@ from .tools.render import Renderer
 
 
 class Engine:
-    scene: Scene = Scene()
-    debug_mode: bool = False
-    is_working: bool = False
+    scene = Scene()
+    debug_mode = False
+    is_working = False
 
     def add_object(self, obj: Object):
         self.scene.add(obj)

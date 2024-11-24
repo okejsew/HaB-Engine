@@ -6,14 +6,14 @@ from engine.base.component import Component
 class Rigidbody(Component):
     def __init__(self):
         super().__init__()
-        self.velocity: Vector2F = Vector2F()
-        self.acceleration: Vector2F = Vector2F()
-        self.force: Vector2F = Vector2F()
+        self.velocity = Vector2F()
+        self.acceleration = Vector2F()
+        self.force = Vector2F()
 
         self.mass = 1
         self.is_gravity = True
         self.gravity = 0.981
-        self.max_fall_speed: float = 10
+        self.max_fall_speed = 10.0
 
     def add_force(self, force: Vector2F):
         self.force += force

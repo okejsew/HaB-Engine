@@ -1,4 +1,4 @@
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from engine.base.common.point import Pointed, Point
 from engine.base.common.vector import Vector2, Rotation
@@ -10,17 +10,12 @@ if TYPE_CHECKING:
 
 class Collision:
     def __init__(self, obj: 'Object', point: Point, direction: Vector2):
-        self.object: Optional[Object] = obj
-        self.point: Point = point
-        self.direction: Vector2 = direction
-
+        self.object, self.point, self.direction = obj, point, direction
 
 class Collider(Pointed):
     def __init__(self):
         super().__init__()
-        self.points.append(Point(Vector2(0, 0)))
         self.collisions: list[Collision] = []
-        self.__object: Optional[Object] = None
 
     def add_collision(self, obj: 'Object', point: Point, direction: Vector2):
         self.collisions.append(Collision(obj, point, direction))
@@ -35,22 +30,24 @@ class Collider(Pointed):
         self.collisions.clear()
         for obj in self.owner.scene.objects:
             if obj is self.owner: continue
-            self.__object = obj
-            collider = obj.get_component(Collider)
-            if not collider: continue
-            for point1 in self.get():
-                for point2 in collider.get():
-                    self.check(point1, point2)
+            self.check(obj)
 
-    def check(self, point1: Point, point2: Point):
-        def _check(direction: Vector2):
+    def check(self, obj: 'Object'):
+        collider = obj.get_component(Collider)
+        if not collider: return
+        for point1 in self.get():
+            for point2 in collider.get():
+                self._check(point1, point2, obj)
+
+    def _check(self, point1: Point, point2: Point, obj: 'Object'):
+        def __check(direction: Vector2):
             try:
                 if point1.offset + direction == point2.offset:
-                    self.add_collision(self.__object, point1, direction)
+                    self.add_collision(obj, point1, direction)
             except Exception as ex:
                 Debug.error(str(ex))
 
-        _check(Rotation.default.value)
-        _check(Rotation.right.value)
-        _check(Rotation.left.value)
-        _check(Rotation.down.value)
+        __check(Rotation.default.value)
+        __check(Rotation.right.value)
+        __check(Rotation.left.value)
+        __check(Rotation.down.value)

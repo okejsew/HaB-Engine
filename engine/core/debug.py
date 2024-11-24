@@ -6,7 +6,7 @@ class DebugRenderer:
     tick = 0
 
     def __init__(self):
-        self.render: bool = True
+        self.render = True
         super().__init__()
 
     @staticmethod

@@ -6,7 +6,7 @@ from engine.tools.debug import Debug
 
 
 class Renderer:
-    fps: float = 0
+    fps = 0.0
     listeners: list[Callable[[], None]] = []
 
     @staticmethod

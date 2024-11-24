@@ -10,7 +10,7 @@ pattern = re.compile(r'^\s*(\S+)\s*;\s*(-?\d+)\s*,\s*(-?\d+)\s*$')
 class TPoint(Point):
     def __init__(self, sign: str, offset: Vector2):
         super().__init__(offset)
-        self.sign: str = sign
+        self.sign = sign
 
     def copy(self):
         return TPoint(self.sign, self.offset.copy())

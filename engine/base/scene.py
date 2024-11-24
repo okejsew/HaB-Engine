@@ -6,7 +6,7 @@ from engine.base.object import Object
 
 class Scene:
     def __init__(self, name: str = 'Scene'):
-        self.name: str = name
+        self.name = name
         self.objects: list[Object] = []
         self.camera: Optional[Camera] = Camera()
         self.add(self.camera)

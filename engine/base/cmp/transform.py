@@ -7,8 +7,8 @@ from engine.tools.debug import Debug
 class Transform(Component):
     def __init__(self):
         super().__init__()
-        self.position: Vector2 = Vector2()
-        self.rotation: Rotation = Rotation.default
+        self.position = Vector2()
+        self.rotation = Rotation.default
         self.moving_remainder: Vector2 = Vector2()
 
     def translate(self, delta: Vector2 | Vector2F):

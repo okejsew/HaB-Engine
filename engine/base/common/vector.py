@@ -4,8 +4,7 @@ from math import floor
 
 class Vector2:
     def __init__(self, x: int = 0, y: int = 0):
-        self.x: int = x
-        self.y: int = y
+        self.x, self.y = x, y
 
     def __add__(self, other):
         return Vector2(self.x + other.x, self.y + other.y)
@@ -47,8 +46,7 @@ class Vector2:
 
 class Vector2F:
     def __init__(self, x: float = 0, y: float = 0):
-        self.x: float = x
-        self.y: float = y
+        self.x, self.y = x, y
 
     def length(self):
         return (self.x ** 2 + self.y ** 2) ** 0.5

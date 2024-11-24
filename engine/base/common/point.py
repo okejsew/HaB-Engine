@@ -4,7 +4,7 @@ from engine.base.component import Component
 
 class Point:
     def __init__(self, offset: Vector2 = Vector2()):
-        self.offset: Vector2 = offset
+        self.offset = offset
 
     def copy(self):
         return Point(self.offset.copy())

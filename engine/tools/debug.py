@@ -13,7 +13,7 @@ max_y, _ = window.getmaxyx()
 class Debug:
     stack: list[Report] = []
     log_stack: dict[str, str] = {}
-    tick: int = 0
+    tick = 0
 
     @staticmethod
     def info(message: str):
