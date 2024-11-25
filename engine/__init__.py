@@ -1,57 +1,41 @@
+import curses
+
 from .base.object import Object
 from .base.scene import Scene
-from .core.debug import DebugRenderer
 from .core.physic import Physic
-from .core.renderer import ObjectRenderer
+from .core.renderer import Renderer
 from .core.scripter import Scripter
-from .tools.console import window
+from .tools.console import window, Console
 from .tools.debug import Debug
-from .tools.render import Renderer
 
 
 class Engine:
     scene = Scene()
-    debug_mode = False
     is_working = False
-
-    def add_object(self, obj: Object):
-        self.scene.add(obj)
 
     @staticmethod
     def setup():
-        Debug.info('Настройка движка...')
-        ObjectRenderer.setup(Engine.scene)
-        Scripter.setup(Engine.scene)
-        Physic.setup(Engine.scene)
-        if Engine.debug_mode:
-            DebugRenderer.setup()
+        Engine.is_working = True
+        for core in [Renderer, Scripter, Physic]:
+            core.setup()
 
     @staticmethod
     def run():
-        Debug.info('Запуск движка...')
-        Engine.is_working = True
         Engine.setup()
-        Engine.thread()
-
-    @staticmethod
-    def thread():
-        Physic.start_thread()
+        Physic.thread.start()
         while Engine.is_working:
-            Renderer.update()
-            Scripter.update()
-            DebugRenderer.update()
+            try:
+                Console.update()
+                Scripter.update()
+            except Exception as ex:
+                Engine.error(ex)
 
     @staticmethod
-    def switch_scene(new: Scene):
-        Debug.warn('Смена сцены...')
-        Engine.scene = new
-        Engine.setup()
-
-    @staticmethod
-    def set_scene(new: Scene):
-        Engine.scene = new
-
-    @staticmethod
-    def end():
+    def error(ex: Exception):
         Engine.is_working = False
-        Physic.thread.join()
+        curses.endwin()
+        try:
+            Physic.thread.join()
+        except Exception as exp:
+            print(f'Ошибка не в главном потоке ({exp})')
+        input(f'Произошла ошибка: {ex}')

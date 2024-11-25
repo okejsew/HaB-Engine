@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Iterable
 
 from engine.base.camera import Camera
 from engine.base.object import Object
@@ -24,3 +24,6 @@ class Scene:
     def remove(self, obj: Object):
         if obj in self.objects:
             self.objects.remove(obj)
+
+    def __iter__(self) -> Iterable[Object]:
+        return iter(self.objects)

@@ -1,40 +1,33 @@
 from typing import Optional
 
 from engine.base.cmp.texture import Texture
+from engine.base.object import Object
 from engine.base.scene import Scene
-from engine.tools.console import set_point
-from engine.tools.debug import Debug
-from engine.tools.render import Renderer
+from engine.tools.console import set_point, Console
 
 
-class ObjectRenderer:
+class Renderer:
     scene: Optional[Scene] = None
 
     @staticmethod
-    def setup(scene: Scene):
-        ObjectRenderer.scene = scene
-        Renderer.register(ObjectRenderer.render)
+    def setup():
+        from engine import Engine
+        Renderer.scene = Engine.scene
+        Console.register(Renderer.render_objects)
 
     @staticmethod
     def render_objects():
-        ObjectRenderer.scene.camera.update()
-        objects_to_draw = [obj for obj in ObjectRenderer.scene.objects if obj.visible]
-        for obj in objects_to_draw:
-            texture = obj.get_component(Texture)
-            if not texture: continue
-            for point in texture.get():
-                if not ObjectRenderer.scene.camera.in_region(point):
-                    continue
-                set_point(point.offset - ObjectRenderer.scene.camera.region[0], point.sign)
+        Renderer.scene.camera.update()
+        for obj in Renderer.scene:
+            if not obj.visible:
+                continue
+            Renderer.render_object(obj)
 
     @staticmethod
-    def render_info():
-        camera_region = ObjectRenderer.scene.camera.region
-        Debug.log('camera_position', f'Позиция камеры: {ObjectRenderer.scene.camera.transform.position}')
-        Debug.log('camera_region', f'Регион камеры: {camera_region[0]} - {camera_region[1]}')
-        Debug.log('scene_objects', f'Объектов на сцене: {len(ObjectRenderer.scene.objects)}')
-
-    @staticmethod
-    def render():
-        ObjectRenderer.render_objects()
-        ObjectRenderer.render_info()
+    def render_object(obj: Object):
+        texture = obj.get_component(Texture)
+        if not texture: return
+        for point in texture.get():
+            if not Renderer.scene.camera.in_region(point):
+                continue
+            set_point(point.offset - Renderer.scene.camera.region[0], point.sign)

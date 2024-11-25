@@ -9,7 +9,7 @@ class Transform(Component):
         super().__init__()
         self.position = Vector2()
         self.rotation = Rotation.default
-        self.moving_remainder: Vector2 = Vector2()
+        self.moving_remainder = Vector2()
 
     def translate(self, delta: Vector2 | Vector2F):
         try:
