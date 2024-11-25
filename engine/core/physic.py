@@ -6,28 +6,27 @@ from engine.base.cmp.rigidbody import Rigidbody
 from engine.base.scene import Scene
 
 
-class Physic:
+class PhysicsCore:
     scene: Optional[Scene] = None
     thread: Optional[Thread] = None
 
     @staticmethod
-    def setup():
-        from engine import Engine
-        Physic.scene = Engine.scene
-        Physic.thread = Thread(target=Physic.__thread)
+    def setup(scene: Scene):
+        PhysicsCore.scene = scene
+        PhysicsCore.thread = Thread(target=PhysicsCore.__thread)
 
     @staticmethod
     def __thread():
         from engine import Engine
         while Engine.is_working:
             try:
-                Physic.update()
+                PhysicsCore.update()
             except Exception as ex:
                 Engine.error(ex)
 
     @staticmethod
     def update():
-        for obj in Physic.scene:
+        for obj in PhysicsCore.scene:
             rigidbody = obj.get_component(Rigidbody)
             if rigidbody: rigidbody.update()
         time.sleep(0.016)

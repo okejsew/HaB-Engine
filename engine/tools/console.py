@@ -40,3 +40,9 @@ class Console:
         for listener in Console.listeners:
             listener()
         window.refresh()
+
+    @staticmethod
+    def end():
+        Console.listeners.clear()
+        window.clear()
+        curses.endwin()

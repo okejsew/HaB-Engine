@@ -1,12 +1,8 @@
-import curses
-
-from .base.object import Object
 from .base.scene import Scene
-from .core.physic import Physic
-from .core.renderer import Renderer
-from .core.scripter import Scripter
-from .tools.console import window, Console
-from .tools.debug import Debug
+from .core.physic import PhysicsCore
+from .core.render import RenderCore
+from .core.script import ScriptCore
+from .tools.console import Console
 
 
 class Engine:
@@ -15,27 +11,32 @@ class Engine:
 
     @staticmethod
     def setup():
-        Engine.is_working = True
-        for core in [Renderer, Scripter, Physic]:
-            core.setup()
+        for core in [RenderCore, ScriptCore, PhysicsCore]:
+            core.setup(Engine.scene)
 
     @staticmethod
     def run():
         Engine.setup()
-        Physic.thread.start()
+        ScriptCore.awake()
+        Engine.is_working = True
+        PhysicsCore.thread.start()
         while Engine.is_working:
             try:
                 Console.update()
-                Scripter.update()
+                ScriptCore.update()
             except Exception as ex:
                 Engine.error(ex)
 
     @staticmethod
-    def error(ex: Exception):
+    def end():
         Engine.is_working = False
-        curses.endwin()
+        Console.end()
         try:
-            Physic.thread.join()
+            PhysicsCore.thread.join()
         except Exception as exp:
-            print(f'Ошибка не в главном потоке ({exp})')
+            print(f'Ошибка в потоке физики ({exp})')
+
+    @staticmethod
+    def error(ex: Exception):
+        Engine.end()
         input(f'Произошла ошибка: {ex}')

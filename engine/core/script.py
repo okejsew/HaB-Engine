@@ -4,27 +4,26 @@ from engine.base.cmp.script import Script
 from engine.base.scene import Scene
 
 
-class Scripter:
+class ScriptCore:
     scene: Optional[Scene] = None
 
     @staticmethod
-    def setup():
-        from engine import Engine
-        Scripter.scene = Engine.scene
+    def setup(scene: Scene):
+        ScriptCore.scene = scene
 
     @staticmethod
     def get_scripts() -> list[Script]:
         scripts = []
-        for obj in Scripter.scene:
-            scripts += obj.get_components(Script)
+        for obj in ScriptCore.scene:
+            scripts += obj.get_components(ScriptCore)
         return scripts
 
     @staticmethod
     def awake():
-        for script in Scripter.get_scripts():
+        for script in ScriptCore.get_scripts():
             script.awake()
 
     @staticmethod
     def update():
-        for script in Scripter.get_scripts():
+        for script in ScriptCore.get_scripts():
             script.update()
