@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
-from engine.base.common.point import Pointed, Point
-from engine.base.common.vector import Vector2, Rotation
+from engine.common.point import Pointed, Point
+from engine.common.vector import Vector2, Rotation
 from engine.tools.debug import Debug
 
 if TYPE_CHECKING:
@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 class Collision:
     def __init__(self, obj: 'Object', point: Point, direction: Vector2):
         self.object, self.point, self.direction = obj, point, direction
+
 
 class Collider(Pointed):
     def __init__(self):

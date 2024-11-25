@@ -1,6 +1,6 @@
-from engine.base.common.point import Point
-from engine.base.common.vector import Vector2
 from engine.base.object import Object
+from engine.common.point import Point
+from engine.common.vector import Vector2
 
 
 class Camera(Object):
@@ -10,7 +10,6 @@ class Camera(Object):
         self.transform.position = Vector2(60, 15)
         self.name = 'Camera'
         self.region = self.get_region()
-
 
     def update(self):
         self.region = self.get_region()

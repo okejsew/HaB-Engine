@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, TypeVar, Type, Optional
 
-from engine.base.cmp.transform import Transform
+from engine.components.transform import Transform
 from engine.tools.debug import Debug
 
 if TYPE_CHECKING:

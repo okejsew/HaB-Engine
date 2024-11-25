@@ -1,7 +1,7 @@
 import re
 
-from engine.base.common.point import Point, Pointed
-from engine.base.common.vector import Vector2, Rotation
+from engine.common.point import Point, Pointed
+from engine.common.vector import Vector2, Rotation
 from engine.tools.debug import Debug
 
 pattern = re.compile(r'^\s*(\S+)\s*;\s*(-?\d+)\s*,\s*(-?\d+)\s*$')

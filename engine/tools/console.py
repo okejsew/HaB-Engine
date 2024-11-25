@@ -3,7 +3,7 @@ from typing import Callable
 
 import _curses
 
-from engine.base.common.vector import Vector2
+from engine.common.vector import Vector2
 
 window: _curses.window = curses.initscr()
 window.border(0)

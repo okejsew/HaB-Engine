@@ -1,9 +1,9 @@
 from engine import Engine
-from engine.base.cmp.colliders.texture import TextureCollider
-from engine.base.cmp.rigidbody import Rigidbody
-from engine.base.cmp.texture import Texture
-from engine.base.common.vector import Vector2
 from engine.base.object import Object
+from engine.common.vector import Vector2
+from engine.components.colliders.texture import TextureCollider
+from engine.components.rigidbody import Rigidbody
+from engine.components.texture import Texture
 
 human = Object()
 human.add_component(Texture.load('engine/assets/human.tx'))

@@ -2,8 +2,8 @@ import time
 from threading import Thread
 from typing import Optional
 
-from engine.base.cmp.rigidbody import Rigidbody
 from engine.base.scene import Scene
+from engine.components.rigidbody import Rigidbody
 
 
 class PhysicsCore:

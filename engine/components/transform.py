@@ -1,6 +1,6 @@
-from engine.base.cmp.collider import Collider
-from engine.base.common.vector import Vector2, Vector2F, Rotation
 from engine.base.component import Component
+from engine.common.vector import Vector2, Vector2F, Rotation
+from engine.components.collider import Collider
 from engine.tools.debug import Debug
 
 

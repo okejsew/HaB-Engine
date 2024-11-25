@@ -1,7 +1,7 @@
 from typing import Optional
 
-from engine.base.cmp.script import Script
 from engine.base.scene import Scene
+from engine.components.script import Script
 
 
 class ScriptCore:

@@ -115,4 +115,3 @@ class Rotation(Enum):
                 offset.x, offset.y = -offset.y, offset.x
             case Rotation.down:
                 offset.x, offset.y = -offset.x, -offset.y
-

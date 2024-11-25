@@ -6,6 +6,7 @@ class Report:
         self.type = _type
         self.message = message
 
+
 class Debug:
     __max_y = 0
     stack: list[Report] = []

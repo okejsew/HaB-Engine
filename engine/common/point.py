@@ -1,5 +1,5 @@
-from engine.base.common.vector import Vector2
 from engine.base.component import Component
+from engine.common.vector import Vector2
 
 
 class Point:

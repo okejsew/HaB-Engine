@@ -1,8 +1,8 @@
 from typing import Optional
 
-from engine.base.cmp.texture import Texture
 from engine.base.object import Object
 from engine.base.scene import Scene
+from engine.components.texture import Texture
 from engine.tools.console import set_point, Console
 
 

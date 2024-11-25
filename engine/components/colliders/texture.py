@@ -1,5 +1,5 @@
-from engine.base.cmp.collider import Collider
-from engine.base.cmp.texture import Texture, TPoint
+from engine.components.collider import Collider
+from engine.components.texture import Texture, TPoint
 from engine.tools.debug import Debug
 
 
