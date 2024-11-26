@@ -1,10 +1,12 @@
+from dataclasses import dataclass
 from enum import Enum
 from math import floor
 
 
+@dataclass
 class Vector2:
-    def __init__(self, x: int = 0, y: int = 0):
-        self.x, self.y = x, y
+    x: int = 0
+    y: int = 0
 
     def __add__(self, other):
         return Vector2(self.x + other.x, self.y + other.y)
@@ -37,16 +39,24 @@ class Vector2:
     def copy(self):
         return Vector2(self.x, self.y)
 
-    def __str__(self):
-        return f'({self.y}, {self.x})'
-
     def __abs__(self):
         return Vector2(abs(self.x), abs(self.y))
 
+    def direction(self):
+        next_x = self.x / abs(self.x) if self.x != 0 else 0
+        next_y = self.y / abs(self.y) if self.y != 0 else 0
+        return Vector2F(next_x, next_y)
 
+
+@dataclass
 class Vector2F:
-    def __init__(self, x: float = 0, y: float = 0):
-        self.x, self.y = x, y
+    x: float = 0
+    y: float = 0
+
+    def direction(self):
+        next_x = self.x / abs(self.x) if self.x != 0 else 0
+        next_y = self.y / abs(self.y) if self.y != 0 else 0
+        return Vector2F(next_x, next_y)
 
     def length(self):
         return (self.x ** 2 + self.y ** 2) ** 0.5

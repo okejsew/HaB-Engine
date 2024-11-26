@@ -1,25 +1,25 @@
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from engine.common.point import Pointed, Point
 from engine.common.vector import Vector2, Rotation
-from engine.tools.debug import Debug
 
 if TYPE_CHECKING:
     from engine.base.object import Object
 
 
+@dataclass
 class Collision:
-    def __init__(self, obj: 'Object', point: Point, direction: Vector2):
-        self.object, self.point, self.direction = obj, point, direction
+    object: 'Object'
+    self_point: Point
+    collision_point: Point
+    direction: Vector2
 
 
 class Collider(Pointed):
     def __init__(self):
         super().__init__()
         self.collisions: list[Collision] = []
-
-    def add_collision(self, obj: 'Object', point: Point, direction: Vector2):
-        self.collisions.append(Collision(obj, point, direction))
 
     def check_direction(self, direction: Vector2):
         self.calculate()
@@ -29,26 +29,23 @@ class Collider(Pointed):
 
     def calculate(self):
         self.collisions.clear()
-        for obj in self.owner.scene.objects:
-            if obj is self.owner: continue
-            self.check(obj)
+        if not self.get(): return
+        for obj in self.owner.scene:
+            if obj is not self.owner:
+                self.check(obj)
 
     def check(self, obj: 'Object'):
-        collider = obj.get_component(Collider)
-        if not collider: return
+        if collider := obj.get_component(Collider):
+            self.check_object(collider)
+
+    def check_object(self, collider: 'Collider'):
+        if not collider.get(): return
         for point1 in self.get():
             for point2 in collider.get():
-                self._check(point1, point2, obj)
+                self.check_point(point1, point2, collider.owner)
 
-    def _check(self, point1: Point, point2: Point, obj: 'Object'):
-        def __check(direction: Vector2):
-            try:
-                if point1.offset + direction == point2.offset:
-                    self.add_collision(obj, point1, direction)
-            except Exception as ex:
-                Debug.error(str(ex))
-
-        __check(Rotation.default.value)
-        __check(Rotation.right.value)
-        __check(Rotation.left.value)
-        __check(Rotation.down.value)
+    def check_point(self, point1: Point, point2: Point, obj: 'Object'):
+        for direction in [Rotation.default, Rotation.right, Rotation.left, Rotation.down]:
+            if point1.offset + direction.value == point2.offset:
+                c = Collision(obj, point1, point2, direction.value)
+                self.collisions.append(c)

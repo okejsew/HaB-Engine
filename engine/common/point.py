@@ -1,10 +1,12 @@
+from dataclasses import dataclass
+
 from engine.base.component import Component
 from engine.common.vector import Vector2
 
 
+@dataclass
 class Point:
-    def __init__(self, offset: Vector2 = Vector2()):
-        self.offset = offset
+    offset: Vector2
 
     def copy(self):
         return Point(self.offset.copy())

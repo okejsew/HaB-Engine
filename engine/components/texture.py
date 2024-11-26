@@ -1,4 +1,5 @@
 import re
+from dataclasses import dataclass
 
 from engine.common.point import Point, Pointed
 from engine.common.vector import Vector2, Rotation
@@ -7,13 +8,12 @@ from engine.tools.debug import Debug
 pattern = re.compile(r'^\s*(\S+)\s*;\s*(-?\d+)\s*,\s*(-?\d+)\s*$')
 
 
+@dataclass
 class TPoint(Point):
-    def __init__(self, sign: str, offset: Vector2):
-        super().__init__(offset)
-        self.sign = sign
+    sign: str
 
     def copy(self):
-        return TPoint(self.sign, self.offset.copy())
+        return TPoint(self.offset.copy(), self.sign)
 
 
 class Texture(Pointed):
@@ -22,7 +22,7 @@ class Texture(Pointed):
         self.points: list[TPoint] = []
 
     def get(self) -> list[TPoint]:
-        return [self.true_point(point) for point in self.points]
+        return list(map(self.true_point, self.points))
 
     def true_point(self, point: TPoint):
         point_copy = point.copy()
@@ -34,15 +34,17 @@ class Texture(Pointed):
     def load(path: str):
         texture = Texture()
 
+        def parse_line(line: str):
+            if not (line := line.strip()): return
+            if match := pattern.match(line):
+                sign, x, y = match.groups()
+                texture.points.append(TPoint(Vector2(int(x), int(y)), sign))
+            else:
+                Debug.error(f'{line} <- Ошибка синтаксиса в файле {path}')
+
         with open(path, 'r', encoding='utf-8') as file:
-            for i, line in enumerate(file.readlines()):
-                line = line.strip()
-                if not line: continue
-                match = pattern.match(line)
-                if not match:
-                    Debug.error(f'{line} <- Ошибка синтаксиса на линии {i + 1} в файле {path}')
-                else:
-                    sign, x, y = match.groups()
-                    texture.points.append(TPoint(sign, Vector2(int(x), int(y))))
+            for line in file.readlines():
+                parse_line(line)
+
         Debug.info(f'Загружена текстура из файла "{path}"')
         return texture

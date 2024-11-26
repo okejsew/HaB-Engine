@@ -19,6 +19,12 @@ class Object:
         self.transform.owner = self
         self.scene: Optional[Scene] = None
 
+    def remove_component(self, component: 'Component'):
+        if component in self.components:
+            self.components.remove(component)
+        else:
+            Debug.error(f'Не удалось убрать компонент: {component}')
+
     def add_component(self, component: 'Component'):
         for comp in self.components:
             if type(component) is type(comp):

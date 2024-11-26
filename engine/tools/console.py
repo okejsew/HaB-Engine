@@ -32,7 +32,9 @@ class Console:
 
     @staticmethod
     def register(listener: Callable):
+        from engine.tools.debug import Debug
         Console.listeners.append(listener)
+        Debug.info(f'Добавлен отрисовщик: {listener}')
 
     @staticmethod
     def update():

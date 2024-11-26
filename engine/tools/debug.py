@@ -19,16 +19,21 @@ class Debug:
         Console.register(Debug.render)
 
     @staticmethod
+    def add(report: Report):
+        if len(Debug.stack) < 20:
+            Debug.stack.append(report)
+
+    @staticmethod
     def info(message: str):
-        Debug.stack.append(Report('(INFO)', message))
+        Debug.add(Report('(INFO)', message))
 
     @staticmethod
     def warn(message: str):
-        Debug.stack.append(Report('{WARN}', message))
+        Debug.add(Report('[WARN]', message))
 
     @staticmethod
     def error(message: str):
-        Debug.stack.append(Report('[ ERROR ]', message))
+        Debug.add(Report('[ ERROR ]', message))
 
     @staticmethod
     def log(sender, message):
@@ -45,7 +50,7 @@ class Debug:
     @staticmethod
     def update():
         Debug.tick += 1
-        if Debug.tick == 2500:
+        if Debug.tick == 3500:
             Debug.tick = 0
             if Debug.stack:
-                Debug.stack.pop(-1)
+                Debug.stack.pop(0)

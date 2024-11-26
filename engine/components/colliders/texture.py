@@ -8,8 +8,9 @@ class TextureCollider(Collider):
         super().__init__()
 
     def get(self) -> list[TPoint]:
-        texture = self.owner.get_component(Texture)
-        if texture:
+        if texture := self.owner.get_component(Texture):
             return texture.get()
         else:
             Debug.error('У объекта нет текстуры, коллайдер не может работать')
+            self.owner.remove_component(self)
+            return []

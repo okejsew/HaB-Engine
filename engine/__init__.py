@@ -1,3 +1,5 @@
+import traceback
+
 from .base.scene import Scene
 from .core.physic import PhysicsCore
 from .core.render import RenderCore
@@ -44,4 +46,6 @@ class Engine:
     @staticmethod
     def error(ex: Exception):
         Engine.end()
-        input(f'Произошла ошибка: \n{ex.__class__.__name__}\n{ex}')
+        print(ex)
+        traceback.print_exc()
+        input()
