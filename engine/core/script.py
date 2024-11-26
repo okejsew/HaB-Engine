@@ -2,14 +2,15 @@ from typing import Optional
 
 from engine.base.scene import Scene
 from engine.components.script import Script
+from engine.main import Engine
 
 
 class ScriptCore:
     scene: Optional[Scene] = None
 
     @staticmethod
-    def setup(scene: Scene):
-        ScriptCore.scene = scene
+    def setup():
+        ScriptCore.scene = Engine.scene
 
     @staticmethod
     def get_scripts() -> list[Script]:

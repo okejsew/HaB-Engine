@@ -1,22 +1,19 @@
-from engine.tools.console import window, Console
+from dataclasses import dataclass
+
+from engine.tools.console import window
 
 
+@dataclass
 class Report:
-    def __init__(self, _type: str, message: str):
-        self.type = _type
-        self.message = message
+    type: str
+    message: str
 
 
 class Debug:
-    __max_y = 0
+    __max_y = window.getmaxyx()[0]
     stack: list[Report] = []
     log_stack: dict[str, str] = {}
     tick = 0
-
-    @staticmethod
-    def setup():
-        Debug.__max_y = window.getmaxyx()[0]
-        Console.register(Debug.render)
 
     @staticmethod
     def add(report: Report):

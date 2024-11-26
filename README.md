@@ -26,7 +26,7 @@
 Вот пример того, как можно создать простую сцену с объектами:
 
 ```python
-from engine import Engine
+from engine import Application
 from engine.base.scene import Scene
 from engine.base.object import Object
 
@@ -36,8 +36,8 @@ obj = Object()
 scene.add(obj)
 
 # Запускаем движок
-Engine.switch_scene(scene)
-Engine.run()
+Application.switch_scene(scene)
+Application.run()
 ```
 
 ## Готовые примеры

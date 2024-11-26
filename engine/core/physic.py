@@ -4,6 +4,7 @@ from typing import Optional
 
 from engine.base.scene import Scene
 from engine.components.rigidbody import Rigidbody
+from engine.main import Engine
 
 
 class PhysicsCore:
@@ -11,13 +12,12 @@ class PhysicsCore:
     thread: Optional[Thread] = None
 
     @staticmethod
-    def setup(scene: Scene):
-        PhysicsCore.scene = scene
+    def setup():
+        PhysicsCore.scene = Engine.scene
         PhysicsCore.thread = Thread(target=PhysicsCore.__thread)
 
     @staticmethod
     def __thread():
-        from engine import Engine
         while Engine.is_working:
             try:
                 PhysicsCore.update()

@@ -2,16 +2,20 @@ from typing import Optional
 
 from engine.base.scene import Scene
 from engine.components.texture import Texture
+from engine.main import Engine
 from engine.tools.console import set_point, Console
+from engine.tools.debug import Debug
 
 
 class RenderCore:
     scene: Optional[Scene] = None
 
     @staticmethod
-    def setup(scene: Scene):
-        RenderCore.scene = scene
+    def setup():
+        RenderCore.scene = Engine.scene
         Console.register(RenderCore.render)
+        if Engine.debug_mode:
+            Console.register(Debug.render)
 
     @staticmethod
     def render():
