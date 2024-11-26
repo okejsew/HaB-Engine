@@ -1,5 +1,3 @@
-from engine.main import Engine
-
 # HaB-Engine
 
 **HaB-Engine** — это простой движок для консольных игр на Python, который позволяет реализовывать различные игровые
