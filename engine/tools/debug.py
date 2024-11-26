@@ -1,4 +1,4 @@
-from engine.tools.console import window
+from engine.tools.console import window, Console
 
 
 class Report:
@@ -14,20 +14,21 @@ class Debug:
     tick = 0
 
     @staticmethod
-    def setup(max_y: int):
-        Debug.__max_y = max_y
+    def setup():
+        Debug.__max_y = window.getmaxyx()[0]
+        Console.register(Debug.render)
 
     @staticmethod
     def info(message: str):
-        Debug.stack.append(Report('INFO', message))
+        Debug.stack.append(Report('(INFO)', message))
 
     @staticmethod
     def warn(message: str):
-        Debug.stack.append(Report('!WARN!', message))
+        Debug.stack.append(Report('{WARN}', message))
 
     @staticmethod
     def error(message: str):
-        Debug.stack.append(Report('==!ERROR!==', message))
+        Debug.stack.append(Report('[ ERROR ]', message))
 
     @staticmethod
     def log(sender, message):
@@ -36,13 +37,15 @@ class Debug:
     @staticmethod
     def render():
         for i, report in enumerate(Debug.stack[:10]):
-            window.addstr(i + 1, 1, f'[{report.type}] {report.message}')
+            window.addstr(i + 1, 1, f'{report.type} {report.message}')
         for i, (sender, message) in enumerate(Debug.log_stack.items()):
             window.addstr(Debug.__max_y - i - 2, 1, message)
+        Debug.update()
 
     @staticmethod
     def update():
         Debug.tick += 1
-        if Debug.tick == 2000:
+        if Debug.tick == 2500:
             Debug.tick = 0
-            Debug.stack.pop(-1)
+            if Debug.stack:
+                Debug.stack.pop(-1)

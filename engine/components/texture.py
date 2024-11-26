@@ -35,14 +35,14 @@ class Texture(Pointed):
         texture = Texture()
 
         with open(path, 'r', encoding='utf-8') as file:
-            for line in file.readlines():
+            for i, line in enumerate(file.readlines()):
                 line = line.strip()
                 if not line: continue
                 match = pattern.match(line)
                 if not match:
-                    Debug.error(f'Texture file syntax error >>> {line} <<<')
+                    Debug.error(f'{line} <- Ошибка синтаксиса на линии {i + 1} в файле {path}')
                 else:
                     sign, x, y = match.groups()
                     texture.points.append(TPoint(sign, Vector2(int(x), int(y))))
-        Debug.warn(f'Загружена текстура из файла "{path}"')
+        Debug.info(f'Загружена текстура из файла "{path}"')
         return texture

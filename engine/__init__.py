@@ -3,6 +3,7 @@ from .core.physic import PhysicsCore
 from .core.render import RenderCore
 from .core.script import ScriptCore
 from .tools.console import Console
+from .tools.debug import Debug
 
 
 class Engine:
@@ -11,8 +12,12 @@ class Engine:
 
     @staticmethod
     def setup():
-        for core in [RenderCore, ScriptCore, PhysicsCore]:
-            core.setup(Engine.scene)
+        try:
+            for core in [RenderCore, ScriptCore, PhysicsCore]:
+                core.setup(Engine.scene)
+            Debug.setup()
+        except Exception as ex:
+            Engine.error(ex)
 
     @staticmethod
     def run():
@@ -39,4 +44,4 @@ class Engine:
     @staticmethod
     def error(ex: Exception):
         Engine.end()
-        input(f'Произошла ошибка: {ex}')
+        input(f'Произошла ошибка: \n{ex.__class__.__name__}\n{ex}')
