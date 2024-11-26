@@ -26,7 +26,6 @@ class PhysicsCore:
 
     @staticmethod
     def update():
-        for obj in PhysicsCore.scene:
-            rigidbody = obj.get_component(Rigidbody)
-            if rigidbody: rigidbody.update()
+        for rigidbody in PhysicsCore.scene.get_components(Rigidbody):
+            rigidbody.update()
         time.sleep(0.016)

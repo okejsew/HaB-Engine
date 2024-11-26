@@ -13,17 +13,10 @@ class ScriptCore:
 
     @staticmethod
     def get_scripts() -> list[Script]:
-        scripts = []
-        for obj in ScriptCore.scene:
-            scripts += obj.get_components(ScriptCore)
-        return scripts
+        return ScriptCore.scene.get_components(Script)
 
     @staticmethod
-    def awake():
-        for script in ScriptCore.get_scripts():
-            script.awake()
+    def awake(): map(lambda s: s.awake(), ScriptCore.get_scripts())
 
     @staticmethod
-    def update():
-        for script in ScriptCore.get_scripts():
-            script.update()
+    def update(): map(lambda s: s.update(), ScriptCore.get_scripts())

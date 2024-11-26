@@ -1,8 +1,9 @@
-from typing import Optional, Iterable
+from typing import Optional, Iterable, Type, TypeVar
 
 from engine.base.camera import Camera
 from engine.base.object import Object
 
+T = TypeVar('T')
 
 class Scene:
     def __init__(self, name: str = 'Scene'):
@@ -15,6 +16,12 @@ class Scene:
         if obj not in self.objects:
             self.objects.append(obj)
             obj.scene = self
+
+    def get_components(self, t: Type[T]) -> list[Optional[T]]:
+        components = []
+        for obj in self:
+            components += obj.get_components(t)
+        return components
 
     def get(self, name: str) -> Object:
         for obj in self.objects:
