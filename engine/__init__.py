@@ -7,3 +7,4 @@ from .components.colliders.texture import TextureCollider
 from .components.rigidbody import Rigidbody
 from .components.script import Script
 from .components.texture import Texture, TPoint
+from .main import Engine

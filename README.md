@@ -1,3 +1,5 @@
+from engine.main import Engine
+
 # HaB-Engine
 
 **HaB-Engine** — это простой движок для консольных игр на Python, который позволяет реализовывать различные игровые
@@ -26,9 +28,7 @@
 Вот пример того, как можно создать простую сцену с объектами:
 
 ```python
-from engine import Application
-from engine.base.scene import Scene
-from engine.base.object import Object
+from engine import *
 
 # Создаем объект и добавляем его в сцену
 scene = Scene('MainScene')
@@ -36,7 +36,7 @@ obj = Object()
 scene.add(obj)
 
 # Запускаем движок
-Application.switch_scene(scene)
+Engine.scene = scene
 Application.run()
 ```
 
