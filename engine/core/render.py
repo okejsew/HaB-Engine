@@ -1,32 +1,26 @@
-from typing import Optional
-
 from engine.base.scene import Scene
-from engine.components.texture import Texture
-from engine.main import Engine
-from engine.tools.console import set_point, Console
-from engine.tools.debug import Debug
+from engine.base.components import Texture
+import engine.tools.console as console
+from engine.math import Vector2
+
+scene: Scene | None
 
 
-class RenderCore:
-    scene: Optional[Scene] = None
+def __init__(_scene: Scene):
+    global scene
+    scene = _scene
+    console.register(render)
 
-    @staticmethod
-    def setup():
-        RenderCore.scene = Engine.scene
-        Console.register(RenderCore.render)
-        if Engine.debug_mode:
-            Console.register(Debug.render)
+def render():
+    scene.camera.update()
+    for txt in scene.get_components(Texture):
+        if txt.owner.visible:
+            render_object(txt)
 
-    @staticmethod
-    def render():
-        RenderCore.scene.camera.update()
-        for txt in RenderCore.scene.get_components(Texture):
-            if txt.owner.visible:
-                RenderCore.render_object(txt)
+def render_object(txt: Texture):
+    camera_offset = scene.camera.region[0]
+    for point in txt.get():
+        vec = point.vec - camera_offset
+        if scene.camera.in_region(point):
+            console.addch(vec.y, vec.x, point.sign)
 
-    @staticmethod
-    def render_object(txt: Texture):
-        camera_offset = RenderCore.scene.camera.region[0]
-        for point in txt.get():
-            if RenderCore.scene.camera.in_region(point):
-                set_point(point.offset - camera_offset, point.sign)

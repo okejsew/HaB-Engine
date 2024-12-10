@@ -1,31 +1,27 @@
 import time
 from threading import Thread
-from typing import Optional
 
 from engine.base.scene import Scene
-from engine.components.rigidbody import Rigidbody
-from engine.main import Engine
+from engine.base.components import Rigidbody
+
+scene: Scene | None
+thread: Thread | None
+state: dict[str, bool]
 
 
-class PhysicsCore:
-    scene: Optional[Scene] = None
-    thread: Optional[Thread] = None
+def update():
+    for rigidbody in scene.get_components(Rigidbody):
+        rigidbody.update()
+    time.sleep(0.016)
 
-    @staticmethod
-    def setup():
-        PhysicsCore.scene = Engine.scene
-        PhysicsCore.thread = Thread(target=PhysicsCore.__thread)
 
-    @staticmethod
-    def __thread():
-        while Engine.is_working:
-            try:
-                PhysicsCore.update()
-            except Exception as ex:
-                Engine.error(ex)
+def _thread():
+    while state['work']:
+        update()
 
-    @staticmethod
-    def update():
-        for rigidbody in PhysicsCore.scene.get_components(Rigidbody):
-            rigidbody.update()
-        time.sleep(0.016)
+
+def __init__(_scene: Scene, _state: dict):
+    global scene, thread, state
+    scene = _scene
+    thread = Thread(target=_thread)
+    state = _state
