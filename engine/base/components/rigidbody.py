@@ -1,6 +1,6 @@
 from engine.base.component import Component
-from engine.common.vector import Vector2F, Vector2
-from engine.components.collider import Collider
+from engine.math import Vector2F, Vector2
+from engine.base.components.collider import Collider
 
 
 class Rigidbody(Component):

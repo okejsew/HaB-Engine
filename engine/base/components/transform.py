@@ -1,7 +1,6 @@
 from engine.base.component import Component
-from engine.common.vector import Vector2, Vector2F, Rotation
-from engine.components.collider import Collider
-from engine.tools.debug import Debug
+from engine.math import Vector2, Vector2F, Rotation
+from engine.base.components import Collider
 
 
 class Transform(Component):
@@ -22,12 +21,12 @@ class Transform(Component):
             self.moving_remainder = delta - int_vel
             self.position += int_vel
         except Exception as ex:
-            Debug.error(str(ex))
+            print(ex)
 
-    def translateX(self, factor: float):
+    def translate_x(self, factor: float):
         self.translate(Vector2F(factor, 0))
 
-    def translateY(self, factor: float):
+    def translate_y(self, factor: float):
         self.translate(Vector2F(0, factor))
 
     def rotate_right(self):

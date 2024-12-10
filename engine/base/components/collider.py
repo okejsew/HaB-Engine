@@ -1,25 +1,25 @@
-from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from engine.common.point import Pointed, Point
-from engine.common.vector import Vector2, Rotation
+from engine.base.components.texture import Texture
+from engine.base.components.pointed import Pointed
+from engine.data import Collision, Point, TPoint
+from engine.math import Vector2, Rotation
 
 if TYPE_CHECKING:
     from engine.base.object import Object
-
-
-@dataclass
-class Collision:
-    object: 'Object'
-    self_point: Point
-    collision_point: Point
-    direction: Vector2
 
 
 class Collider(Pointed):
     def __init__(self):
         super().__init__()
         self.collisions: list[Collision] = []
+
+    def get(self) -> list[TPoint]:
+        if texture := self.owner.get_component(Texture):
+            return texture.get()
+        else:
+            self.owner.remove_component(self)
+            return []
 
     def check_direction(self, direction: Vector2):
         self.calculate()
@@ -46,6 +46,6 @@ class Collider(Pointed):
 
     def check_point(self, point1: Point, point2: Point, obj: 'Object'):
         for direction in [Rotation.default, Rotation.right, Rotation.left, Rotation.down]:
-            if point1.offset + direction.value == point2.offset:
+            if point1.vec + direction.value == point2.vec:
                 c = Collision(obj, point1, point2, direction.value)
                 self.collisions.append(c)

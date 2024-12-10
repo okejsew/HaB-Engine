@@ -1,15 +1,5 @@
-from dataclasses import dataclass
-
 from engine.base.component import Component
-from engine.common.vector import Vector2
-
-
-@dataclass
-class Point:
-    offset: Vector2
-
-    def copy(self):
-        return Point(self.offset.copy())
+from engine.data import Point
 
 
 class Pointed(Component):
